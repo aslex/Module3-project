@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import "./App.css";
+import axios from "axios";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  // getFlats {
+
+  //   axios.GET('https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/region?realestatetype=ApartmentRent&geocodes=1276003001014').then(res => {
+  //     console.log(res);
+  //   })
+
+  // }
+  componentDidMount = () => {
+    axios
+      .get(
+        "https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/region?realestatetype=ApartmentRent&geocodes=1276003001014&fulltext=Balkon%20Altbau",
+        { headers: "Access-Control-Allow-Headers" }
+      )
+      .then(response => {
+        console.log(response.data);
+      });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Route path="/city" render={props => <FormCity {...props} />} />
+      </div>
+    );
+  }
 }
 
 export default App;
