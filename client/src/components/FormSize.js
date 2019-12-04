@@ -19,6 +19,7 @@ export default class FormSize extends Component {
     e.preventDefault();
     return this.props.history.push("/form3");  
   };
+  
   render() {
     return (
       <form onSubmit={this.handleSubmit}>

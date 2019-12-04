@@ -6,6 +6,7 @@ export default class FormArea extends Component {
             <form>
             <h1>FORM 5</h1>
                 
+            <button className="hide" type="submit"></button>
             </form>
         )
     }
