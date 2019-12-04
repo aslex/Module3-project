@@ -18,12 +18,17 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
-router.post("/search/area", res => {
-  console.log(res);
-  // const lat = res.body
-  axios.get(
-    "https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/radius?realestatetype=apartmentrent&geocoordinates=52.518500;13.404760;10"
-  );
+router.post("/form1", (req, res) => {
+  console.log(req.body);
+  res.redirect("/form2");
 });
+
+// router.post("/search/area", res => {
+//   console.log(res);
+//   // const lat = res.body
+//   axios.get(
+//     "https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/radius?realestatetype=apartmentrent&geocoordinates=52.518500;13.404760;10"
+//   );
+// });
 
 module.exports = router;
