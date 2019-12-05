@@ -26,23 +26,48 @@ router.post("/form1", (req, res) => {
 router.post("/api/submit", (req, res) => {
   console.log("back end request ----------- ", req.body);
   const { minPrice, maxPrice, city, size, rooms, bathrooms } = req.body.search;
-//   const neighborhoods = req.body.neighborhoods;
-
-// neighborhoods.forEach(place => {
-
-// })
-
-  axios
-    .get(
-      `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&place_name=${city}&listing_type=rent&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}`
-    )
-    .then(response => {
-      console.log("loooooook --------", response.data);
-      res.json(response.data);
+  const neighborhoods = req.body.search.neighborhoods;
+  const features = req.body.search.features;
+  console.log(neighborhoods, features);
+  const keywords = features
+    .map(el => {
+      return "keywords=" + el;
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .join("&");
+  console.log("this is the maped keywords: ", keywords);
+
+  neighborhoods.forEach(place => {
+    axios
+      .get(
+        `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${place}&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
+          " "}`
+      )
+      .then(response => {
+        // console.log("For each neighborhood: ", response.data.response.listings);
+
+        const filteredSearch = response.data.response.listings.filter(el => {
+          if (
+            el.datasource_name == "Immobilienkontor" ||
+            el.datasource_name == "ImmobilienScout24"
+          ) {
+            return true;
+          }
+          return false;
+        });
+        console.log("filtered ARRAY: ", filteredSearch);
+        res.json(filteredSearch);
+        // filteredSearch.forEach(flat => {
+        //   Flat.create(flat)
+        //   .then( newflat => {
+
+        //   });
+        //   )
+        // })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 });
 
 // router.post("/search/area", res => {

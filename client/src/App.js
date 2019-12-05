@@ -43,9 +43,7 @@ class App extends React.Component {
       } else {
         this.setState(
           {
-            features: this.state.features.filter(
-              el => el !== event.target.name
-            )
+            features: this.state.features.filter(el => el !== event.target.name)
           },
           () => console.log(this.state)
         );
@@ -73,21 +71,6 @@ class App extends React.Component {
         );
       }
     }
-    // if ([...this.state.neighborhoods].includes(event.target.name)) {
-    //   const index =this.state.neighborhoods.indexOf(event.target.name);
-    //   this.setState({
-    //     neighborhoods: this.setState.neighborhoods.splice(index, 1)
-    //   });
-    // }
-
-    // this.setState(
-    //   {
-    //     [event.target.name]: !this.state[event.target.name]
-    //   },
-    //   () => {
-    //     console.log(this.state);
-    //   }
-    // );
   };
   updateState = event => {
     console.log("update state called");
@@ -103,7 +86,7 @@ class App extends React.Component {
   finalSubmit = () => {
     console.log("final Submit!");
     axios.post("/api/submit", { search: this.state }).then(res => {
-      console.log("front end response: ", res.data.response.listings);
+      console.log("front end response: ", res);
     });
   };
 
