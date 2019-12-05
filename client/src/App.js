@@ -34,7 +34,7 @@ class App extends React.Component {
       if ([...event.target.classList].includes("active")) {
         this.setState(
           {
-            features: this.state.neighborhoods.concat(event.target.name)
+            features: this.state.features.concat(event.target.name)
           },
           () => {
             console.log(this.state);
@@ -43,7 +43,7 @@ class App extends React.Component {
       } else {
         this.setState(
           {
-            neighborhoods: this.state.neighborhoods.filter(
+            features: this.state.features.filter(
               el => el !== event.target.name
             )
           },
