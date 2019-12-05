@@ -23,6 +23,10 @@ router.post("/form1", (req, res) => {
   res.redirect("/form2");
 });
 
+axios.post('/api/submit', (req, res) => {
+  
+})
+
 // router.post("/search/area", res => {
 //   console.log(res);
 //   // const lat = res.body

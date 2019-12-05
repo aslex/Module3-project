@@ -2,24 +2,16 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 export default class FormCity extends React.Component {
-  state = {
-    city: ""
-  };
+
 
   handleChange = event => {
     console.log("handlechange");
-    const city = event.target.value;
-    this.setState({
-      city: city
-    });
+    this.props.updateState(event);
   };
 
   handleSubmit = e => {
-    console.log("handlesubmit");
     e.preventDefault();
-    // return <Redirect to="/form2" />;
     return this.props.history.push("/form2");
-    // this.props.navigate();
   };
 
   render() {
@@ -33,7 +25,6 @@ export default class FormCity extends React.Component {
           name="city"
           id="city"
         ></input>
-        <button className="hide" type="submit"></button>
       </form>
     );
   }

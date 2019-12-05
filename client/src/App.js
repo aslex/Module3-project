@@ -10,24 +10,48 @@ import FormPrice from "./components/FormPrice";
 import FormSize from "./components/FormSize";
 
 class App extends React.Component {
-  // getFlats {
+  state = {
+    city: "",
+    size: 10,
+    rooms: 1,
+    bathrooms: 1,
+    minPrice: 0,
+    maxPrice: 0,
+    balcony: false,
+    accessible: false,
+    park: false,
+    pets: false,
+    kitchen: false,
+    startDate: null
+  };
 
-  //   axios.GET('https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/region?realestatetype=ApartmentRent&geocodes=1276003001014').then(res => {
-  //     console.log(res);
-  //   })
+  updateButtonState = event => {
+    this.setState(
+      {
+        [event.target.name]: !this.state[event.target.name]
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
+  };
+  updateState = event => {
+    console.log("update state called");
+    console.log(event.target);
+    this.setState(
+      {
+        [event.target.name]: event.target.value
+      },
+      () => console.log(this.state)
+    );
+  };
 
-  // }
-
-  // componentDidMount = () => {
-  //   axios
-  //     .get(
-  //       "https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/region?realestatetype=ApartmentRent&geocodes=1276003001014&fulltext=Balkon%20Altbau",
-  //       { headers: "Access-Control-Allow-Headers" }
-  //     )
-  //     .then(response => {
-  //       console.log(response.data);
-  //     });
-  // };
+  finalSubmit = () => {
+    console.log('final Submit!')
+    axios.post('/api/submit', (req, res) => {
+      
+    })
+  }
 
   render() {
     return (
@@ -35,17 +59,31 @@ class App extends React.Component {
         <Route
           exact
           path="/form1"
-          render={props => <FormCity navigate={this.navigateNext} {...props} />}
+          render={props => <FormCity updateState={this.updateState} {...props} />}
         />
-        <Route exact path="/form2" render={props => <FormSize {...props} />} />
-        <Route exact path="/form3" render={props => <FormPrice {...props} />} />
+        <Route
+          exact
+          path="/form2"
+          render={props => (
+            <FormSize updateState={this.updateState} {...props} />
+          )}
+        />
+        <Route
+          exact
+          path="/form3"
+          render={props => (
+            <FormPrice updateState={this.updateState} {...props} />
+          )}
+        />
         <Route
           exact
           path="/form4"
-          render={props => <FormFeatures {...props} />}
+          render={props => (
+            <FormFeatures updateState={this.updateButtonState} {...props} />
+          )}
         />
-        <Route exact path="/form5" render={props => <FormArea {...props} />} />
-        <Route exact path="/form6" render={props => <FormDate {...props} />} />
+        <Route exact path="/form5" render={props => <FormArea updateState={this.updateButtonState} {...props} />} />
+        <Route exact path="/form6" render={props => <FormDate updateState={this.updateState} finalSubmit={this.finalSubmit} {...props} />} />
       </div>
     );
   }
