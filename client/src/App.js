@@ -17,37 +17,61 @@ class App extends React.Component {
     bathrooms: 1,
     minPrice: 0,
     maxPrice: 0,
-    balcony: false,
-    accessible: false,
-    park: false,
-    pets: false,
-    kitchen: false,
+    features: [],
+    // balcony: false,
+    // accessible: false,
+    // park: false,
+    // pets: false,
+    // kitchen: false,
     startDate: null,
     neighborhoods: []
   };
 
   updateButtonState = event => {
     console.log(event.target.classList);
-    if ([...event.target.classList].includes("active")) {
-      this.setState(
-        {
-          neighborhoods: this.state.neighborhoods.concat(event.target.name)
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
+
+    if ([...event.target.classList].includes("features")) {
+      if ([...event.target.classList].includes("active")) {
+        this.setState(
+          {
+            features: this.state.neighborhoods.concat(event.target.name)
+          },
+          () => {
+            console.log(this.state);
+          }
+        );
+      } else {
+        this.setState(
+          {
+            neighborhoods: this.state.neighborhoods.filter(
+              el => el !== event.target.name
+            )
+          },
+          () => console.log(this.state)
+        );
+      }
     } else {
-      this.setState(
-        {
-          neighborhoods: this.state.neighborhoods.filter(
-            el => el !== event.target.name
-          )
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
+      if ([...event.target.classList].includes("active")) {
+        this.setState(
+          {
+            neighborhoods: this.state.neighborhoods.concat(event.target.name)
+          },
+          () => {
+            console.log(this.state);
+          }
+        );
+      } else {
+        this.setState(
+          {
+            neighborhoods: this.state.neighborhoods.filter(
+              el => el !== event.target.name
+            )
+          },
+          () => {
+            console.log(this.state);
+          }
+        );
+      }
     }
     // if ([...this.state.neighborhoods].includes(event.target.name)) {
     //   const index =this.state.neighborhoods.indexOf(event.target.name);
