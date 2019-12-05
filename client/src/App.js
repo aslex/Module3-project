@@ -22,18 +22,48 @@ class App extends React.Component {
     park: false,
     pets: false,
     kitchen: false,
-    startDate: null
+    startDate: null,
+    neighborhoods: []
   };
 
   updateButtonState = event => {
-    this.setState(
-      {
-        [event.target.name]: !this.state[event.target.name]
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
+    console.log(event.target.classList);
+    if ([...event.target.classList].includes("active")) {
+      this.setState(
+        {
+          neighborhoods: this.state.neighborhoods.concat(event.target.name)
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
+    } else {
+      this.setState(
+        {
+          neighborhoods: this.state.neighborhoods.filter(
+            el => el !== event.target.name
+          )
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
+    }
+    // if ([...this.state.neighborhoods].includes(event.target.name)) {
+    //   const index =this.state.neighborhoods.indexOf(event.target.name);
+    //   this.setState({
+    //     neighborhoods: this.setState.neighborhoods.splice(index, 1)
+    //   });
+    // }
+
+    // this.setState(
+    //   {
+    //     [event.target.name]: !this.state[event.target.name]
+    //   },
+    //   () => {
+    //     console.log(this.state);
+    //   }
+    // );
   };
   updateState = event => {
     console.log("update state called");
@@ -47,11 +77,11 @@ class App extends React.Component {
   };
 
   finalSubmit = () => {
-    console.log('final Submit!')
-    axios.post('/api/submit', (req, res) => {
-      
-    })
-  }
+    console.log("final Submit!");
+    axios.post("/api/submit", { search: this.state }).then(res => {
+      console.log("front end response: ", res.data.response.listings);
+    });
+  };
 
   render() {
     return (
@@ -59,7 +89,9 @@ class App extends React.Component {
         <Route
           exact
           path="/form1"
-          render={props => <FormCity updateState={this.updateState} {...props} />}
+          render={props => (
+            <FormCity updateState={this.updateState} {...props} />
+          )}
         />
         <Route
           exact
@@ -82,8 +114,24 @@ class App extends React.Component {
             <FormFeatures updateState={this.updateButtonState} {...props} />
           )}
         />
-        <Route exact path="/form5" render={props => <FormArea updateState={this.updateButtonState} {...props} />} />
-        <Route exact path="/form6" render={props => <FormDate updateState={this.updateState} finalSubmit={this.finalSubmit} {...props} />} />
+        <Route
+          exact
+          path="/form5"
+          render={props => (
+            <FormArea updateState={this.updateButtonState} {...props} />
+          )}
+        />
+        <Route
+          exact
+          path="/form6"
+          render={props => (
+            <FormDate
+              updateState={this.updateState}
+              finalSubmit={this.finalSubmit}
+              {...props}
+            />
+          )}
+        />
       </div>
     );
   }

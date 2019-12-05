@@ -23,9 +23,27 @@ router.post("/form1", (req, res) => {
   res.redirect("/form2");
 });
 
-axios.post('/api/submit', (req, res) => {
-  
-})
+router.post("/api/submit", (req, res) => {
+  console.log("back end request ----------- ", req.body);
+  const { minPrice, maxPrice, city, size, rooms, bathrooms } = req.body.search;
+//   const neighborhoods = req.body.neighborhoods;
+
+// neighborhoods.forEach(place => {
+
+// })
+
+  axios
+    .get(
+      `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&place_name=${city}&listing_type=rent&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}`
+    )
+    .then(response => {
+      console.log("loooooook --------", response.data);
+      res.json(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
 
 // router.post("/search/area", res => {
 //   console.log(res);
