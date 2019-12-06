@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const User = require("../models/User");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
+const request = require("request");
 /* GET home page */
 router.get("/", (req, res, next) => {
   // axios
@@ -40,7 +44,7 @@ const saveFlatData = listings => {
 };
 
 const filterData = listings => {
-  const filtered = listings.filter(el => {
+  const filtered = listings[0].filter(el => {
     if (
       el.datasource_name == "Immobilienkontor" ||
       el.datasource_name == "ImmobilienScout24"
@@ -49,22 +53,17 @@ const filterData = listings => {
     }
     return false;
   });
-  console.log("THIS IS THE FILTERED LIST: ", filtered);
+
+  // console.log("THIS IS THE FILTERED LIST: ", filtered);
+  return filtered;
   // filter out flats already contacted
 };
 
 const getFlats = searchObject => {
-  console.log("getFLats is called", searchObject);
-  const {
-    minPrice,
-    maxPrice,
-    city,
-    size,
-    rooms,
-    bathrooms
-  } = searchObject.search;
-  const neighborhoods = searchObject.search.neighborhoods;
-  const features = searchObject.search.features;
+  // console.log("getFLats is called", searchObject);
+  const { minPrice, maxPrice, city, size, rooms, bathrooms } = searchObject;
+  const neighborhoods = searchObject.neighborhoods;
+  const features = searchObject.features;
   let keywords = "";
   if (features.length > 0) {
     keywords = features
@@ -73,94 +72,112 @@ const getFlats = searchObject => {
       })
       .join("&");
   }
-  console.log("these are the mapped keywords: ", keywords);
-  if (neighborhoods.length == 1) {
-    return axios
-      .get(
-        `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${
-          neighborhoods[0]
-        }&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
-          ""}`
-      )
-      .then(res => {
-        console.log(res.data.response.listings);
-        filterData(res.data.response.listings);
-      });
-  }
-  if (neighborhoods.length > 1) {
-    console.log("neighborhoods greater than 1");
-    neighborhoods.forEach(place => {
-      axios
-        .get(
-          `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${place}&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
-            ""}`
-        )
-        .then(response => {
-          console.log("axios response: ", response.data.response.listings);
-          filterData(response.data.response.listings);
-        });
+  // console.log("these are the mapped keywords: ", keywords);
+
+  const searchEveryNeighborhood = neighborhoods.map(el => {
+    return axios.get(
+      `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${el}&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
+        ""}`
+    );
+  });
+  // console.log("PROMISES HEREEEEEEEEE: ", searchEveryNeighborhood);
+
+  return Promise.all(searchEveryNeighborhood)
+    .then(response => {
+      const allListings = response.reduce((acc, el) => {
+        return [el.data.response.listings, ...acc];
+      }, []);
+      // console.log("this is what gets filtered: ", allListings);
+      return filterData(allListings);
+    })
+    .catch(err => {
+      console.log(err);
     });
-  }
+
+  // if (neighborhoods.length == 1) {
+  //   return axios
+  //     .get(
+  //       `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${
+  //         neighborhoods[0]
+  //       }&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
+  //         ""}`
+  //     )
+  //     .then(res => {
+  //       console.log(res.data.response.listings);
+  //       filterData(res.data.response.listings);
+  //     });
+  // }
+  // if (neighborhoods.length > 1) {
+  //   console.log("neighborhoods greater than 1");
+  //   neighborhoods.forEach(place => {
+  //     axios
+  //       .get(
+  //         `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${place}&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
+  //           ""}`
+  //       )
+  //       .then(response => {
+  //         console.log("axios response: ", response.data.response.listings);
+  //         filterData(response.data.response.listings);
+  //       });
+  //   });
+  // }
 };
+
+const getContact = newFlats => {
+  // newFlats.forEach(el => {
+    axios.get('https://www.nestoria.de/detail/0000000112781900250594699/title/5/1-2?serpUid=&pt=1&ot=2&l=mitte&did=7_default&t_sec=9&t_or=45&t_pvid=null&utm_source=api&utm_medium=external')
+    .then( res => {
+      console.log('just the head: ', res.data.document.getElementbyTagName('head'))
+      
+      console.log(res.data);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+  
+
 
 router.post("/api/submit", (req, res) => {
   console.log("back end request ----------- ", req.body);
   // req.user???
-  getFlats(req.body);
-  return res.json(null);
+  const user = req.user;
+  const search = req.body.search;
+  console.log("USER: ", user, search);
+  getFlats(search)
+    .then(onlyImmoScout => {
+      let contactedFlats = user.contactedFlats.forEach(id => {
+        return Flat.find({ _id: id }).then(flat => flat);
+      });
+      console.log(".........", contactedFlats);
 
-  // const { minPrice, maxPrice, city, size, rooms, bathrooms } = req.body.search;
-  // const neighborhoods = req.body.search.neighborhoods;
-  // const features = req.body.search.features;
-  // console.log(neighborhoods, features);
-  // const keywords = features
-  //   .map(el => {
-  //     return "keywords=" + el;
-  //   })
-  //   .join("&");
-  // console.log("these are the mapped keywords: ", keywords);
-
-  neighborhoods
-    .forEach((place, index) => {
-      // set timeout?
-      axios
-        .get(
-          `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${place}&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
-            " "}`
-        )
-        .then(response => {
-          console.log("THIS IS THE RESPONSE", response);
-          // console.log("For each neighborhood: ", response.data.response.listings);
-
-          const filteredSearch = response.data.response.listings.filter(el => {
-            if (
-              el.datasource_name == "Immobilienkontor" ||
-              el.datasource_name == "ImmobilienScout24"
-            ) {
-              return true;
+      const newFlats = onlyImmoScout.filter(flat => {
+        if (contactedFlats) {
+          return contactedFlats.forEach(obj => {
+            if (obj.exposeURL == flat.lister_url) {
+              return false;
             }
-            return false;
+            return true;
           });
-          // .filter(el => {
-          //   if (Flat.find( req.user.contactedFlats{ lister_url: el.lister_url})
-          // });
-          //make sure we only contact new flats
+        } else return true;
+      });
 
-          console.log("filtered ARRAY: ", filteredSearch);
-          // res.json(filteredSearch);
-          // filteredSearch.forEach(flat => {
-          //   Flat.create(flat)
-          //   .then( newflat => {
-
-          //   });
-          //   )
-          // })
-        });
+      console.log("NEW FLATS ONLY : ", newFlats);
+      // getContact(newFlats)
+      getContact();
+      return res.json(null);
     })
 
+    // const newFlats = onlyImmoScout.filter(el => {
+    //   if (found.contactedFlats.includes(el.lister_url)) {
+    //     return false;
+    //   }
+    //   return true;
+    // });
     .catch(err => {
       console.log(err);
     });
+
+  // getFlats(req.body)
 });
 
 // router.post("/search/area", res => {

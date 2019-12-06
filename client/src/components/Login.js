@@ -27,7 +27,7 @@ class Login extends Component {
                 // lift the data up to the App state
                 this.props.setUser(data);
                 // redirect to "/profile"
-                this.props.history.push("/profile");
+                this.props.history.push("/profile/:user");
             }
         });
     };

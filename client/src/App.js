@@ -15,7 +15,7 @@ import Login from "./components/Login";
 
 class App extends React.Component {
   state = {
-    user: null,
+    user: this.props.user,
     city: "",
     size: 10,
     rooms: 1,
@@ -23,11 +23,6 @@ class App extends React.Component {
     minPrice: 0,
     maxPrice: 0,
     features: [],
-    // balcony: false,
-    // accessible: false,
-    // park: false,
-    // pets: false,
-    // kitchen: false,
     startDate: null,
     neighborhoods: []
   };
@@ -95,15 +90,26 @@ class App extends React.Component {
 
   finalSubmit = () => {
     console.log("final Submit!");
-    axios.post("/api/submit", { search: this.state }).then(res => {
-      console.log("front end response: ", res);
-    });
+    axios
+      .post("/api/submit", { search: this.state })
+      .then(res => {
+        console.log("front end response: ", res);
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
   };
 
   render() {
     return (
       <div className="App">
-        <Route exact path="/" component={Home} />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <Home user={this.state.user} clearUser={this.setUser} />
+          )}
+        />
 
         {/* <Route exact path="/" render={() => (
             loggedIn ? ( 
@@ -113,8 +119,14 @@ class App extends React.Component {
             )
           )}
         /> */}
-        <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} />
-        <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} />
+        <Route
+          path="/auth/signup"
+          render={props => <Signup setUser={this.setUser} {...props} />}
+        />
+        <Route
+          path="/auth/login"
+          render={props => <Login setUser={this.setUser} {...props} />}
+        />
         <Route
           exact
           path="/form1"

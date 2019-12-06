@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Link } from "react";
 import { signup } from "../services/auth";
 import { Alert, Form, Button } from "react-bootstrap";
 
@@ -38,6 +38,7 @@ class Signup extends Component {
     return (
       <div>
         <h2>Signup</h2>
+        
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label htmlFor="username">Username: </Form.Label>
