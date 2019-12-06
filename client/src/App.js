@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import "./App.css";
 import axios from "axios";
 import FormArea from "./components/FormArea";
@@ -8,6 +8,10 @@ import FormDate from "./components/FormDate";
 import FormFeatures from "./components/FormFeatures";
 import FormPrice from "./components/FormPrice";
 import FormSize from "./components/FormSize";
+import Home from "./components/Home";
+
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 class App extends React.Component {
   state = {
@@ -110,6 +114,19 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Route
+          exact path="/" component={Home}
+        />
+
+        {/* <Route exact path="/" render={() => (
+            loggedIn ? ( 
+              <Redirect to="/form1"/>
+            ) : (
+              <Signup/>
+            )
+          )}
+        /> */}
+
         <Route
           exact
           path="/form1"

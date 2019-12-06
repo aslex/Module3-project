@@ -4,15 +4,17 @@ const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express      = require('express');
 const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
+// const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
 const session    = require("express-session");
+const passport = require("passport");
 const MongoStore = require('connect-mongo')(session);
-const flash      = require("connect-flash");
-    
+// const flash      = require("connect-flash");
+
+require("./configs/passport");
 
 mongoose
   .connect('mongodb://localhost/module3-project', {useNewUrlParser: true})
@@ -49,37 +51,54 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
-hbs.registerHelper('ifUndefined', (value, options) => {
-  if (arguments.length < 2)
-      throw new Error("Handlebars Helper ifUndefined needs 1 parameter");
-  if (typeof value !== undefined ) {
-      return options.inverse(this);
-  } else {
-      return options.fn(this);
-  }
-});
-  
+// hbs.registerHelper('ifUndefined', (value, options) => {
+//   if (arguments.length < 2)
+//       throw new Error("Handlebars Helper ifUndefined needs 1 parameter");
+//   if (typeof value !== undefined ) {
+//       return options.inverse(this);
+//   } else {
+//       return options.fn(this);
+//   }
+// });
+
+// ADD SESSION SETTINGS HERE:
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    })
+  })
+);
+
+// USE passport.initialize() and passport.session() HERE:
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
 
 // Enable authentication using session + passport
-app.use(session({
-  secret: 'irongenerator',
-  resave: true,
-  saveUninitialized: true,
-  store: new MongoStore( { mongooseConnection: mongoose.connection })
-}))
-app.use(flash());
-require('./passport')(app);
-    
+// app.use(session({
+//   secret: 'irongenerator',
+//   resave: true,
+//   saveUninitialized: true,
+//   store: new MongoStore( { mongooseConnection: mongoose.connection })
+// }))
+// app.use(flash());
+// require('./passport')(app);
 
+// ROUTES MIDDLEWARE STARTS HERE:
+    
 const index = require('./routes/index');
 app.use('/', index);
 
 const authRoutes = require('./routes/auth');
-app.use('/auth', authRoutes);
-      
+app.use('/api/auth', authRoutes);
 
 module.exports = app;
