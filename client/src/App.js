@@ -9,6 +9,7 @@ import FormFeatures from "./components/FormFeatures";
 import FormPrice from "./components/FormPrice";
 import FormSize from "./components/FormSize";
 import Home from "./components/Home";
+import Profile from "./components/Profile";
 
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -104,7 +105,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <Route exact path="/" component={Home} />
+        <Route exact path="/profile"  render={ (props) => (<Profile {...props} user={this.state.user}/>)} />
 
+        {/* UPDATE profile route so its only available to the loggedin User: */}
         {/* <Route exact path="/" render={() => (
             loggedIn ? ( 
               <Redirect to="/form1"/>
@@ -113,6 +116,7 @@ class App extends React.Component {
             )
           )}
         /> */}
+        
         <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} />
         <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} />
         <Route

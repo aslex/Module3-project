@@ -7,7 +7,7 @@ const userSchema = new Schema(
     password: String,
     contactedFlats: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Flat"
       }
     ]

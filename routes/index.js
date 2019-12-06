@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const User = require("../models/User");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -170,5 +171,26 @@ router.post("/api/submit", (req, res) => {
 //     "https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/radius?realestatetype=apartmentrent&geocoordinates=52.518500;13.404760;10"
 //   );
 // });
+
+router.get("/profile", (req, res) => {
+  // const id = req.params.id;
+  // console.log(req.user)
+  //const id = req.user._id;
+  // console.log(id)
+  // User.findById(id)
+  // .then(response => {
+  //   console.log(response);
+  //   res.json(response);
+  // });
+
+  User.findById(req.user._id)
+    .populate("contactedFlats")
+    .then(user => {
+         res.json(user);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
 
 module.exports = router;
