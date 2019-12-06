@@ -15,6 +15,7 @@ import Login from "./components/Login";
 
 class App extends React.Component {
   state = {
+    user: null,
     city: "",
     size: 10,
     rooms: 1,
@@ -29,6 +30,11 @@ class App extends React.Component {
     // kitchen: false,
     startDate: null,
     neighborhoods: []
+  };
+  setUser = user => {
+    this.setState({
+      user: user
+    });
   };
 
   updateButtonState = event => {
@@ -97,11 +103,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Link to="/auth/signup">Signup</Link>
-        <Link to="/auth/login">Login</Link>
-        <Route
-          exact path="/" component={Home}
-        />
+        <Route exact path="/" component={Home} />
 
         {/* <Route exact path="/" render={() => (
             loggedIn ? ( 
@@ -111,7 +113,8 @@ class App extends React.Component {
             )
           )}
         /> */}
-
+        <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} />
+        <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} />
         <Route
           exact
           path="/form1"
