@@ -1,19 +1,13 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
 const flatSchema = new Schema({
-  title: String,
-  size: String,
-  prize: String,
-  neighborhood: String,
-  image: String,
-  listingURL: String,
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }
-})
+  size: Number,
+  price: String,
+  imageURL: String,
+  exposeURL: String,
+  rooms: Number
+});
 
-const Flat = mongoose.model("Project", flatSchema);
-
+const Flat = mongoose.model('Flat', flatSchema);
 module.exports = Flat;

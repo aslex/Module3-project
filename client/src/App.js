@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Link, Switch } from "react-router-dom";
 import "./App.css";
 import axios from "axios";
 import FormArea from "./components/FormArea";
@@ -38,7 +38,7 @@ class App extends React.Component {
       if ([...event.target.classList].includes("active")) {
         this.setState(
           {
-            features: this.state.neighborhoods.concat(event.target.name)
+            features: this.state.features.concat(event.target.name)
           },
           () => {
             console.log(this.state);
@@ -47,9 +47,7 @@ class App extends React.Component {
       } else {
         this.setState(
           {
-            neighborhoods: this.state.neighborhoods.filter(
-              el => el !== event.target.name
-            )
+            features: this.state.features.filter(el => el !== event.target.name)
           },
           () => console.log(this.state)
         );
@@ -77,21 +75,6 @@ class App extends React.Component {
         );
       }
     }
-    // if ([...this.state.neighborhoods].includes(event.target.name)) {
-    //   const index =this.state.neighborhoods.indexOf(event.target.name);
-    //   this.setState({
-    //     neighborhoods: this.setState.neighborhoods.splice(index, 1)
-    //   });
-    // }
-
-    // this.setState(
-    //   {
-    //     [event.target.name]: !this.state[event.target.name]
-    //   },
-    //   () => {
-    //     console.log(this.state);
-    //   }
-    // );
   };
   updateState = event => {
     console.log("update state called");
@@ -107,13 +90,15 @@ class App extends React.Component {
   finalSubmit = () => {
     console.log("final Submit!");
     axios.post("/api/submit", { search: this.state }).then(res => {
-      console.log("front end response: ", res.data.response.listings);
+      console.log("front end response: ", res);
     });
   };
 
   render() {
     return (
       <div className="App">
+        <Link to="/auth/signup">Signup</Link>
+        <Link to="/auth/login">Login</Link>
         <Route
           exact path="/" component={Home}
         />

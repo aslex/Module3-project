@@ -27,29 +27,37 @@ export default class FormArea extends Component {
       <form onSubmit={this.handleSubmit}>
         <h1>Neighborhoods:</h1>
 
-        <button onClick={this.handleClick} className="button" name="fhain">
+        <button
+          onClick={this.handleClick}
+          className="button"
+          name="friedrichshain"
+        >
           Friedrichshain
         </button>
-        <button onClick={this.handleClick} className="button" name="xberg">
+        <button onClick={this.handleClick} className="button" name="kreuzberg">
           Kreuzberg
         </button>
-        <button onClick={this.handleClick} className="button" name="pberg">
+        <button
+          onClick={this.handleClick}
+          className="button"
+          name="prenzlauer berg"
+        >
           Prenzlauer Berg
         </button>
         <button onClick={this.handleClick} className="button" name="mitte">
           Mitte
         </button>
-        <button onClick={this.handleClick} className="button" name="shoneberg">
+        <button onClick={this.handleClick} className="button" name="shoeneberg">
           Schöneberg
         </button>
         <button
           onClick={this.handleClick}
           className="button"
-          name="charlottenberg"
+          name="charlottenburg"
         >
-          Charlottenberg
+          Charlottenburg
         </button>
-        <button onClick={this.handleClick} className="button" name="neuk">
+        <button onClick={this.handleClick} className="button" name="neukoelln">
           Neukölln
         </button>
         <button onClick={this.handleClick} className="button" name="wedding">
@@ -69,9 +77,9 @@ export default class FormArea extends Component {
         <button
           onClick={this.handleClick}
           className="extra button hide"
-          name="marzan"
+          name="marzahn"
         >
-          Marzan
+          Marzahn
         </button>
         <button
           onClick={this.handleClick}

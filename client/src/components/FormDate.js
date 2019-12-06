@@ -10,7 +10,7 @@ export default class FormCity extends Component {
     console.log("handlesubmit");
     e.preventDefault();
     this.props.finalSubmit(e);
-    return this.props.history.push("/finalSubmit");
+    // return this.props.history.push("/finalSubmit");
   };
   render() {
     return (
