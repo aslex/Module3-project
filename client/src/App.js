@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Link, Switch } from "react-router-dom";
 import "./App.css";
 import axios from "axios";
 import FormArea from "./components/FormArea";
@@ -93,6 +93,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Link to="/auth/signup">Signup</Link>
+        <Link to="/auth/login">Login</Link>
         <Route
           exact
           path="/form1"

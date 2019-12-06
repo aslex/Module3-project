@@ -75,6 +75,13 @@ export default class FormFeatures extends Component {
         >
           Furnished
         </button>
+        <button
+          className="features button"
+          name="elevator"
+          onClick={this.handleClick}
+        >
+          Elevator
+        </button>
         <br />
         <button type="submit">Next</button>
       </form>

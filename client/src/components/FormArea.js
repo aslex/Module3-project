@@ -77,9 +77,9 @@ export default class FormArea extends Component {
         <button
           onClick={this.handleClick}
           className="extra button hide"
-          name="marzan"
+          name="marzahn"
         >
-          Marzan
+          Marzahn
         </button>
         <button
           onClick={this.handleClick}
