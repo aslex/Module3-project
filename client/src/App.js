@@ -104,7 +104,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Route exact path="/profile"  render={ (props) => (<Profile {...props} user={this.state.user}/>)} />
+        
         <Route
           exact
           path="/"
@@ -122,11 +122,10 @@ class App extends React.Component {
             )
           )}
         /> */}
-<<<<<<< HEAD
+
         
         <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} />
         <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} />
-=======
         <Route
           path="/auth/signup"
           render={props => <Signup setUser={this.setUser} {...props} />}
@@ -135,11 +134,8 @@ class App extends React.Component {
           path="/auth/login"
           render={props => <Login setUser={this.setUser} {...props} />}
         />
-<<<<<<< HEAD
         <Route path={`/profile/${this.props.user._id}`} render={props => <Profile user={this.state.user} {...props} setUser={this.setUser}/>}/>
-=======
->>>>>>> ec48c22e5672f061039e27a847fb624c875e4a4a
->>>>>>> 08d29b27fb44dc81b1ae56bceba574786221a053
+
         <Route
           exact
           path="/form1"

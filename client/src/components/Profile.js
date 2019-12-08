@@ -11,7 +11,7 @@ export class Profile extends Component {
       console.log("component did mount", res.data);
 
       this.setState({
-        apartments: [...res.data]
+        apartments: [...res.data.contactedFlats]
       });
     });
   }

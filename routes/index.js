@@ -4,7 +4,6 @@ const axios = require("axios");
 const User = require("../models/User");
 const Flat = require("../models/Flat");
 
-
 /* GET home page */
 router.get("/", (req, res, next) => {
   // axios
@@ -26,15 +25,10 @@ router.get("/profile/:id", (req, res, next) => {
   // get listings from user.contactedFlats
   const id = req.params.id;
   User.findOne({ _id: id })
+    .populate("contactedFlats")
+
     .then(foundUser => {
-      console.log(foundUser);
-      const allFlats = foundUser.contactedFlats.map(el => {
-        return Flat.findOne({ _id: el });
-      });
-      return Promise.all(allFlats).then(response => {
-        console.log("RESPONSE: ", response);
-        res.json(response);
-      });
+      res.json(foundUser);
     })
     .catch(err => {
       console.log(err);
