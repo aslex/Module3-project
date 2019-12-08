@@ -184,4 +184,25 @@ router.post("/api/submit", (req, res) => {
 //   );
 // });
 
+router.get("/profile", (req, res) => {
+  // const id = req.params.id;
+  // console.log(req.user)
+  //const id = req.user._id;
+  // console.log(id)
+  // User.findById(id)
+  // .then(response => {
+  //   console.log(response);
+  //   res.json(response);
+  // });
+
+  User.findById(req.user._id)
+    .populate("contactedFlats")
+    .then(user => {
+      res.json(user);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;
