@@ -9,6 +9,7 @@ import FormFeatures from "./components/FormFeatures";
 import FormPrice from "./components/FormPrice";
 import FormSize from "./components/FormSize";
 import Home from "./components/Home";
+import Profile from "./components/Profile"
 
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -127,6 +128,7 @@ class App extends React.Component {
           path="/auth/login"
           render={props => <Login setUser={this.setUser} {...props} />}
         />
+        <Route path={`/profile/${this.props.user._id}`} render={props => <Profile user={this.state.user} {...props} setUser={this.setUser}/>}/>
         <Route
           exact
           path="/form1"

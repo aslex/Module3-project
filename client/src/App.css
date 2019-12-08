@@ -29,3 +29,13 @@
   background-color: blue;
   color: white;
 }
+
+.flat img {
+  max-height: 50vh;
+}
+/*
+.flat {
+  padding: 10%;
+  display: flex;
+  justify-content: space-around;
+} */
