@@ -9,12 +9,7 @@ import FormFeatures from "./components/FormFeatures";
 import FormPrice from "./components/FormPrice";
 import FormSize from "./components/FormSize";
 import Home from "./components/Home";
-<<<<<<< HEAD
 import Profile from "./components/Profile";
-=======
-import Profile from "./components/Profile"
-
->>>>>>> 2f740175764e0b3cd8a8ecf1ace291cd93e9e6cd
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import FinalSubmit from "./components/FinalSubmit";
@@ -109,15 +104,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-<<<<<<< HEAD
-        <Route
-          exact
-          path="/profile"
-          render={props => <Profile {...props} user={this.state.user} />}
-        />
-=======
-        
->>>>>>> 2f740175764e0b3cd8a8ecf1ace291cd93e9e6cd
         <Route
           exact
           path="/"
@@ -128,36 +114,43 @@ class App extends React.Component {
 
         {/* UPDATE profile route so its only available to the loggedin User: */}
         {/* <Route exact path="/" render={() => (
-            loggedIn ? ( 
-              <Redirect to="/form1"/>
-            ) : (
-              <Signup/>
-            )
-          )}
-        /> */}
+        //     loggedIn ? ( 
+        //       <Redirect to="/form1"/>
+        //     ) : (
+        //       <Signup/>
+        //     )
+        //   )}
+        // /> */}
 
-<<<<<<< HEAD
-        {/* <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} /> */}
-        {/* <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} /> */}
-
-=======
-        
-        <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} />
-        <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} />
->>>>>>> 2f740175764e0b3cd8a8ecf1ace291cd93e9e6cd
         <Route
           path="/auth/signup"
           render={props => <Signup setUser={this.setUser} {...props} />}
         />
+
         <Route
           path="/auth/login"
           render={props => <Login setUser={this.setUser} {...props} />}
         />
-<<<<<<< HEAD
-=======
-        <Route path={`/profile`} render={props => <Profile user={this.state.user} {...props} setUser={this.setUser}/>}/>
 
->>>>>>> 2f740175764e0b3cd8a8ecf1ace291cd93e9e6cd
+        {/* <Route
+          path="/profile"
+          render={props => (
+            <Profile user={this.state.user} {...props} setUser={this.setUser} />
+          )}
+        /> */}
+
+        <Route
+          exact
+          path="/profile"
+          render={props => (
+            <Profile
+              updateState={this.updateState}
+              user={this.props.user}
+              {...props}
+            />
+          )}
+        />
+
         <Route
           exact
           path="/form1"
@@ -165,6 +158,7 @@ class App extends React.Component {
             <FormCity updateState={this.updateState} {...props} />
           )}
         />
+
         <Route
           exact
           path="/form2"
