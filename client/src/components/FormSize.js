@@ -43,7 +43,9 @@ export default class FormSize extends Component {
           name="bathrooms"
           id="bathrooms"
         ></input>
-        <button className="hide" type="submit"></button>
+        <br></br>
+        <button type="submit">Next</button>
+        <button onClick={this.props.history.goBack}>Back</button>
       </form>
     );
   }

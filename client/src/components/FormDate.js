@@ -10,8 +10,9 @@ export default class FormCity extends Component {
     console.log("handlesubmit");
     e.preventDefault();
     this.props.finalSubmit(e);
-    // return this.props.history.push("/finalSubmit");
+    return this.props.history.push("/finalSubmit");
   };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -23,7 +24,10 @@ export default class FormCity extends Component {
           type="date"
           id="startDate"
         ></input>
-        <button type="submit" className="hide"></button>
+        <br></br>
+        <button type="submit">SUBMIT FORM</button>
+        <br></br>
+        <button onClick={this.props.history.goBack}>Back</button>
       </form>
     );
   }

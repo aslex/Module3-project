@@ -17,8 +17,8 @@ export default class Home extends Component {
         <h1>You've got flat!</h1>
 
         {this.props.user ? (
-          <Link to="/profile/:user">
-            <button>Get started!</button>
+          <Link to="/profile">
+            <button>Visit Profile</button>
           </Link>
         ) : (
           <Link to="/auth/signup">
@@ -35,6 +35,7 @@ export default class Home extends Component {
         )}
 
         <div>
+          <h1>Here for the first time?</h1>
           <h3>How it works:</h3>
           <span>(1) Set your preferences</span>
           <br></br>

@@ -2,8 +2,6 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 export default class FormCity extends React.Component {
-
-
   handleChange = event => {
     console.log("handlechange");
     this.props.updateState(event);
@@ -24,7 +22,10 @@ export default class FormCity extends React.Component {
           type="text"
           name="city"
           id="city"
+          required
         ></input>
+        <button type="Submit">Next</button>
+        <button onClick={this.props.history.goBack}>Back</button>
       </form>
     );
   }

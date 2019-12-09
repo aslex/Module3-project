@@ -84,6 +84,7 @@ export default class FormFeatures extends Component {
         </button>
         <br />
         <button type="submit">Next</button>
+        <button onClick={this.props.history.goBack}>Back</button>
       </form>
     );
   }

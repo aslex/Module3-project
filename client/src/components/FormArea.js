@@ -89,6 +89,7 @@ export default class FormArea extends Component {
           Reinickendorf
         </button>
         <button type="submit">Next</button>
+        <button onClick={this.props.history.goBack}>Back</button>
       </form>
     );
   }

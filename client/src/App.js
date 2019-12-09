@@ -10,9 +10,9 @@ import FormPrice from "./components/FormPrice";
 import FormSize from "./components/FormSize";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import FinalSubmit from "./components/FinalSubmit";
 
 class App extends React.Component {
   state = {
@@ -104,7 +104,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Route exact path="/profile"  render={ (props) => (<Profile {...props} user={this.state.user}/>)} />
+        <Route
+          exact
+          path="/profile"
+          render={props => <Profile {...props} user={this.state.user} />}
+        />
         <Route
           exact
           path="/"
@@ -122,11 +126,10 @@ class App extends React.Component {
             )
           )}
         /> */}
-<<<<<<< HEAD
-        
-        <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} />
-        <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} />
-=======
+
+        {/* <Route path="/auth/signup" render={ (props) => (<Signup setUser={this.setUser} {...props}/>)} /> */}
+        {/* <Route path="/auth/login" render={ (props) => (<Login setUser={this.setUser} {...props}/>)} /> */}
+
         <Route
           path="/auth/signup"
           render={props => <Signup setUser={this.setUser} {...props} />}
@@ -135,7 +138,6 @@ class App extends React.Component {
           path="/auth/login"
           render={props => <Login setUser={this.setUser} {...props} />}
         />
->>>>>>> ec48c22e5672f061039e27a847fb624c875e4a4a
         <Route
           exact
           path="/form1"
@@ -181,6 +183,11 @@ class App extends React.Component {
               {...props}
             />
           )}
+        />
+        <Route
+          exact
+          path="/finalSubmit"
+          render={props => <FinalSubmit setUser={this.setUser} {...props} />}
         />
       </div>
     );

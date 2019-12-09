@@ -29,7 +29,8 @@ export default class FormPrice extends Component {
           id="maxPrice"
           name="maxPrice"
         ></input>
-        <button className="hide" type="submit"></button>
+        <button type="submit">Next</button>
+        <button onClick={this.props.history.goBack}>Back</button>
       </form>
     );
   }

@@ -29,7 +29,7 @@ class Signup extends Component {
         // lift the data up to the App state
         this.props.setUser(data);
         // redirect to "/projects"
-        this.props.history.push("/profile");
+        this.props.history.push("/form1");
       }
     });
   };
@@ -38,7 +38,7 @@ class Signup extends Component {
     return (
       <div>
         <h2>Signup</h2>
-        
+
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label htmlFor="username">Username: </Form.Label>
