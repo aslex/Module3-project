@@ -1,3 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+body {
+  font-family: Montserrat;
+}
+
 .App {
   text-align: center;
 }
@@ -33,9 +39,27 @@
 .flat img {
   max-height: 50vh;
 }
+
 /*
 .flat {
   padding: 10%;
   display: flex;
   justify-content: space-around;
 } */
+
+/* Progress Bar */
+
+#progressbar li {
+  list-style-type: none;
+  color: black;
+  text-transform: uppercase;
+  font-size: 9px;
+  width: 15.5%;
+  float: left;
+  position: relative;
+  letter-spacing: 1px;
+}
+
+.on {
+  background-color: salmon;
+}

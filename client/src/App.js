@@ -12,7 +12,7 @@ import Profile from "./components/Profile";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import FinalSubmit from "./components/FinalSubmit";
-import Navbar from "./components/Navbar";
+import Navigation from "./components/Navigation";
 
 class App extends React.Component {
   state = {
@@ -105,7 +105,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Navbar user={this.state.user} clearUser={this.setUser} />
+        <Navigation user={this.state.user} clearUser={this.setUser} />
         <Route
           exact
           path="/"
