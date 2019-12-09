@@ -1,47 +1,43 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
-import ContactedFlats from "./ContactedFlats";
 
-export default class Profile extends Component {
+export class Profile extends Component {
   state = {
-    // uncomment:
-    // contactedFlats: this.props.user.contactedFlats
-
-    // for testing:
-    contactedFlats: [
-      {
-        size: 50,
-        prize: "500",
-        imageURL: "https://pictures.immobilienscout24.de/listings/cbfc5fd3-a4b6-4800-a818-3e80125dd9de-1323900672.jpg/ORIG/resize/1106x830%3E/format/jpg/quality/80",
-        exposeURL: "https://www.immobilienscout24.de/expose/104314643"
-      }
-    ]
+    apartments: []
   };
 
-  componentDidMount = () => {
-    axios.get("/profile").then(response => {
-      console.log(response.data);
-      const { contactedFlats } = response.data; // Here we actually get the whole object, not just the object-ids
-      this.setState({ contactedFlats });
+  componentDidMount() {
+    axios.get(`/profile`).then(res => {
+      console.log("component did mount", res.data);
+
+      this.setState({
+        apartments: [...res.data.contactedFlats]
+      });
     });
-  };
+  }
 
   render() {
-    console.log(this.state);
+    if (!this.props.user || this.state.apartments.length == 0) {
+      return <div></div>;
+    }
+    const mappedApts = this.state.apartments.map(el =>{
+       return <div className="flat col-4" key={el._id}>
+            <img className='row-2' src={el.imageURL} alt='flat' />
+            <div className="info row-4">
+            <p>Price: {el.price}</p>
+            <p>Size: {el.size}sqm</p>
+            <p>Rooms: {el.rooms}</p>
+            <a href={el.exposeURL} target="_blank"><p>view listing</p></a>
+            </div>
+        </div>
+    })
     return (
-      <div>
-        <h1>My Profile</h1>
-        <h3>Preferences</h3>
-
-        {/* render the specific preferences of each user */}
-
-        <button>Manage preferences</button>
-
-        <h3>Recently contacted flats</h3>
-        {this.state.contactedFlats.map(el => {
-          return <ContactedFlats flatData={el} />;
-        })}
-      </div>
+      <Fragment>
+        <h1>Welcome {this.props.user.username}</h1>
+        {mappedApts}
+      </Fragment>
     );
   }
 }
+
+export default Profile;

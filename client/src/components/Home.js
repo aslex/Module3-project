@@ -17,8 +17,13 @@ export default class Home extends Component {
         <h1>You've got flat!</h1>
 
         {this.props.user ? (
+<<<<<<< HEAD
           <Link to="/profile">
             <button>Visit Profile</button>
+=======
+          <Link to={`/profile`}>
+            <button>My Profile</button>
+>>>>>>> 2f740175764e0b3cd8a8ecf1ace291cd93e9e6cd
           </Link>
         ) : (
           <Link to="/auth/signup">

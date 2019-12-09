@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const User = require("../models/User");
+const Flat = require("../models/Flat");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -18,6 +19,7 @@ router.get("/", (req, res, next) => {
 
   res.render("index");
 });
+
 
 const saveFlatData = listings => {
   // const userId =
@@ -90,38 +92,10 @@ const getFlats = searchObject => {
     .catch(err => {
       console.log(err);
     });
-
-  // if (neighborhoods.length == 1) {
-  //   return axios
-  //     .get(
-  //       `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${
-  //         neighborhoods[0]
-  //       }&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
-  //         ""}`
-  //     )
-  //     .then(res => {
-  //       console.log(res.data.response.listings);
-  //       filterData(res.data.response.listings);
-  //     });
-  // }
-  // if (neighborhoods.length > 1) {
-  //   console.log("neighborhoods greater than 1");
-  //   neighborhoods.forEach(place => {
-  //     axios
-  //       .get(
-  //         `https://api.nestoria.de/api?encoding=json&pretty=1&action=search_listings&country=de&centre_point=	52.520008,13.404954,20km&place_name=${place}&listing_type=rent&sort=newest&price_min=${minPrice}&price_max=${maxPrice}&bedroom_min=${rooms}&bathroom_min=${bathrooms}&size_min=${size}&${keywords ||
-  //           ""}`
-  //       )
-  //       .then(response => {
-  //         console.log("axios response: ", response.data.response.listings);
-  //         filterData(response.data.response.listings);
-  //       });
-  //   });
-  // }
 };
 
 const getContact = newFlats => {
-  // newFlats.forEach(el => {
+  
   axios
     .get(
       "https://www.nestoria.de/detail/0000000112781900250594699/title/5/1-2?serpUid=&pt=1&ot=2&l=mitte&did=7_default&t_sec=9&t_or=45&t_pvid=null&utm_source=api&utm_medium=external"
@@ -165,21 +139,16 @@ router.post("/api/submit", (req, res) => {
 
       console.log("NEW FLATS ONLY : ", newFlats);
       // getContact(newFlats)
-      getContact();
+      getContact(); //this is not working
       return res.json(null);
     })
 
-    // const newFlats = onlyImmoScout.filter(el => {
-    //   if (found.contactedFlats.includes(el.lister_url)) {
-    //     return false;
-    //   }
-    //   return true;
-    // });
+  
     .catch(err => {
       console.log(err);
     });
 
-  // getFlats(req.body)
+  
 });
 
 // router.post("/search/area", res => {
@@ -191,15 +160,6 @@ router.post("/api/submit", (req, res) => {
 // });
 
 router.get("/profile", (req, res) => {
-  // const id = req.params.id;
-  // console.log(req.user)
-  //const id = req.user._id;
-  // console.log(id)
-  // User.findById(id)
-  // .then(response => {
-  //   console.log(response);
-  //   res.json(response);
-  // });
 
   User.findById(req.user._id)
     .populate("contactedFlats")
