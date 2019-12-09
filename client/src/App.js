@@ -24,17 +24,33 @@ class App extends React.Component {
     minPrice: 0,
     maxPrice: 0,
     features: [],
-    startDate: null,
     neighborhoods: []
   };
   setUser = user => {
+    const {
+      city,
+      size,
+      rooms,
+      bathrooms,
+      minPrice,
+      maxPrice,
+      features,
+      neighborhoods
+    } = user.preferences;
     this.setState({
-      user: user
+      user,
+      city,
+      size,
+      rooms,
+      bathrooms,
+      minPrice,
+      maxPrice,
+      features,
+      neighborhoods
     });
   };
 
   updateButtonState = event => {
-    event.preventDefault();
     console.log(event.target.classList);
 
     if ([...event.target.classList].includes("features")) {
@@ -89,7 +105,17 @@ class App extends React.Component {
       () => console.log(this.state)
     );
   };
-
+  updateUserPreferences = e => {
+    e.preventDefault();
+    console.log("PASSED TO AXIOS", this.state);
+    axios
+      .put("/profile/update-preferences", { settings: this.state })
+      .then(res => {
+        console.log("front end response from updating preferences", res.data);
+     
+       
+      });
+  };
   finalSubmit = () => {
     console.log("final Submit!");
     axios
@@ -101,6 +127,29 @@ class App extends React.Component {
         console.log(err);
       });
   };
+  componentDidMount() {
+    const {
+      city,
+      size,
+      rooms,
+      bathrooms,
+      minPrice,
+      maxPrice,
+      features,
+      neighborhoods
+    } = this.props.user.preferences;
+
+    this.setState({
+      city,
+      size,
+      rooms,
+      bathrooms,
+      minPrice,
+      maxPrice,
+      features,
+      neighborhoods
+    });
+  }
 
   render() {
     return (
@@ -139,9 +188,11 @@ class App extends React.Component {
           path="/profile"
           render={props => (
             <Profile
+              finalSubmit={this.finalSubmit}
               updateState={this.updateState}
               user={this.props.user}
               updateButtonState={this.updateButtonState}
+              updateUserPreferences={this.updateUserPreferences}
               {...props}
               {...this.state}
             />
@@ -197,14 +248,6 @@ class App extends React.Component {
       </div>
     );
   }
-  // navigateNext = (current, props) => {
-
-  //   console.log("navigateNext called");
-  //   console.log(current, props.history);
-  //   const next = toString(current++);
-  //   return props.history.push(".form2");
-  //   // return <Redirect to=`/form${next}` />;
-  // };
 }
 
 export default App;

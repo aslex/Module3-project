@@ -1,3 +1,9 @@
+/* colors: 
+PINK: #AA2447
+CORAL: #FF6F5E
+CREAM: #F5FOE3
+BLUE: #40BFC1 */
+
 .App {
   text-align: center;
 }
@@ -26,7 +32,7 @@
 }
 
 .active {
-  background-color: blue;
+  background-color: #40BFC1;
   color: white;
 }
 

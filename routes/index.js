@@ -190,15 +190,27 @@ const getContact = newFlats => {
     });
 };
 
+const savePreferences = (user, search) => {
+  User.updateOne(
+    { _id: user._id },
+    { preferences: search },
+    { returnOriginal: false }
+  ).then(updated => {
+    console.log("THIS IS THE UPDATED USER DOCUMENT: ", updated);
+  });
+};
+
 router.post("/api/submit", (req, res) => {
   console.log("back end request ----------- ", req.body);
 
   const user = req.user;
   const search = req.body.search;
+  savePreferences(user, search);
+
   console.log("USER: ", user, search);
   getFlats(search)
     .then(onlyImmoScout => {
-      console.log("only immoscount listings: ", onlyImmoScout.length);
+      console.log("only immoscout listings: ", onlyImmoScout.length);
       console.log(user.contactedFlats);
 
       // let allIds = user.contactedFlats
@@ -230,14 +242,6 @@ router.post("/api/submit", (req, res) => {
     });
 });
 
-// router.post("/search/area", res => {
-//   console.log(res);
-//   // const lat = res.body
-//   axios.get(
-//     "https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/radius?realestatetype=apartmentrent&geocoordinates=52.518500;13.404760;10"
-//   );
-// });
-
 router.get("/profile", (req, res) => {
   User.findById(req.user._id)
     .populate("contactedFlats")
@@ -247,6 +251,16 @@ router.get("/profile", (req, res) => {
     .catch(err => {
       res.status(500).json(err);
     });
+});
+
+router.put("/profile/update-preferences", (req, res) => {
+  console.log('request to update:', req.body, 'user: ', req.user);
+  const { city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods } = req.body.settings;
+  User.updateOne({_id: req.user._id }, { preferences: {city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods}}, { new: true }).then(newUser => {
+    console.log('NEW USER: ', newUser);
+    res.json( {newUser: newUser, message: 'Your preferences have been updated!'})
+  })
+ 
 });
 
 module.exports = router;
