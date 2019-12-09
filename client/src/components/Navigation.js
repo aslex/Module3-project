@@ -15,7 +15,7 @@ const Navigation = props => {
     <>
       {props.user ? (
         <Navbar bg="info" expand="lg">
-          <Navbar.Brand href="#home">
+          <Navbar.Brand>
             <img
               src="./images/logo.png"
               width="50"
@@ -47,7 +47,7 @@ const Navigation = props => {
               alt="logo"
             ></img>
           </Navbar.Brand>
-          <Navbar.Brand href="#home">You've got [a] flat!</Navbar.Brand>
+          <Navbar.Brand>You've got [a] flat!</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
