@@ -25,9 +25,11 @@
     "mongoose": "^5.2.10",
     "morgan": "^1.9.0",
     "node-sass-middleware": "^0.11.0",
+    "oauth-1.0a": "^2.2.6",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "react-bootstrap": "^1.0.0-beta.16",
+    "request-promise": "^4.2.5",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {

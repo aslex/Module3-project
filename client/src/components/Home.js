@@ -14,7 +14,7 @@ export default class Home extends Component {
     console.log(this.props.user);
     return (
       <div>
-        <h1>You've got flat!</h1>
+        <h1>You've got [a] flat!</h1>
 
         {this.props.user ? (
           <Link to={`/profile`}>

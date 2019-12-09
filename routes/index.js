@@ -3,6 +3,9 @@ const router = express.Router();
 const axios = require("axios");
 const User = require("../models/User");
 const Flat = require("../models/Flat");
+const crypto = require("crypto");
+const OAuth = require("oauth-1.0a");
+const request = require("request-promise");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -42,9 +45,9 @@ const saveFlatData = listings => {
 };
 
 const filterData = listings => {
-  const filtered = listings[0].filter(el => {
+  const filtered = listings.filter(el => {
     if (
-      el.datasource_name == "Immobilienkontor" ||
+      // el.datasource_name == "Immobilienkontor" ||
       el.datasource_name == "ImmobilienScout24"
     ) {
       return true;
@@ -89,63 +92,136 @@ const getFlats = searchObject => {
       const allListings = response.reduce((acc, el) => {
         return [el.data.response.listings, ...acc];
       }, []);
-      console.log("this is what gets filtered: ", allListings);
-      return filterData(allListings);
+      console.log("this is what gets filtered: ", allListings.flat());
+      const flattenedListings = allListings.flat();
+      return filterData(flattenedListings);
     })
     .catch(err => {
       console.log(err);
     });
 };
 
+function hash_function_sha1(base_string, key) {
+  return crypto
+    .createHmac("sha1", key)
+    .update(base_string)
+    .digest("base64");
+}
+
+const oauth = OAuth({
+  consumer: { key: process.env.SYSTEM_KEY, secret: process.env.API_SECRET },
+  signature_method: "HMAC-SHA1",
+  hash_function: hash_function_sha1
+});
+
+const token = {
+  key: process.env.ACCESS_TOKEN,
+  secret: process.env.TOKEN_SECRET
+};
+
 const getContact = newFlats => {
   const getEachId = newFlats.map(el => {
-    return axios.get(el.lister_url);
+    return axios.get(el.lister_url, { validateStatus: false });
   });
   return Promise.all(getEachId)
     .then(res => {
-      console.log('response foreach applied to this: ', res)
+      if (res.status == 404) {
+        return;
+      }
+      console.log("response foreach applied to this: ", res[0].data);
       let arrOfId = [];
       res.forEach(el => {
-        let index = el.indexOf("https://www.immobilienscout24.de/expose");
-        let exposeID = el.substring(index + 40, index + 49);
-        arrOfId.push(exposeID);
+        if (el.status === 404) {
+          return;
+        }
+        let index = el.data.indexOf("https://www.immobilienscout24.de/expose");
+        let exposeID = el.data.substring(index + 40, index + 49);
+        if (exposeID) {
+          arrOfId.push(exposeID);
+        }
       });
       console.log("EXPOSE ID HEREEEEEEE ", arrOfId);
+      // const headers = {
+      //   Accept: "application/json",
+      //   "Content-Type": "application/json"
+      // };
+      const messageBody = {
+        "expose.contactForm": {
+          "@xmlns": {
+            common: "http://rest.immobilienscout24.de/schema/common/1.0"
+          },
+          firstname: "firstname",
+          lastname: "lastname",
+          phoneNumber: "phoneNumber",
+          emailAddress: "emailAddress@mail.de",
+          appointmentRequested: "YES",
+          message: "message",
+          address: {
+            "@xsi.type": "common:Address",
+            street: "street",
+            houseNumber: "houseNumber",
+            postcode: "12345",
+            city: "city"
+          },
+          salutation: "FEMALE"
+        }
+      };
+      const contactList = arrOfId.map((el, i) => {
+        const requestData = {
+          url: `https://rest.immobilienscout24.de/restapi/api/search/v1.0/expose/${el}/contact`,
+          method: "POST",
+          data: messageBody
+        };
+
+        return request({
+          url: `https://rest.immobilienscout24.de/restapi/api/search/v1.0/expose/${el}/contact`,
+          method: "POST",
+          form: oauth.authorize(requestData, token),
+          json: true
+        });
+      });
+      let b;
+      return Promise.all(contactList).then(res => {
+        console.log(res);
+      });
     })
     .catch(err => {
-      console.log(err);
+      console.log("WITH HEADERS", err);
     });
 };
 
 router.post("/api/submit", (req, res) => {
   console.log("back end request ----------- ", req.body);
-  // req.user???
+
   const user = req.user;
   const search = req.body.search;
   console.log("USER: ", user, search);
   getFlats(search)
     .then(onlyImmoScout => {
       console.log("only immoscount listings: ", onlyImmoScout.length);
+      console.log(user.contactedFlats);
 
-      let contactedFlats = user.contactedFlats.forEach(id => {
-        return Flat.find({ _id: id }).then(flat => flat);
-      });
-      console.log("contacted flats: ", contactedFlats.length);
+      // let allIds = user.contactedFlats
+      // let alreadyContacted =
+      //   Flat.find({ _id: { $all: allIds } })
+      //   .then(flat => flat);
 
-      const newFlats = onlyImmoScout.filter(flat => {
-        if (contactedFlats) {
-          return contactedFlats.forEach(obj => {
-            if (obj.exposeURL == flat.lister_url) {
-              return false;
-            }
-            return true;
-          });
-        } return true;
-      });
+      // console.log("contacted flats: ", alreadyContacted.length);
 
-      console.log("NEW FLATS ONLY : ", newFlats.length);
+      // const newFlats = onlyImmoScout.filter(flat => {
+      //   if (alreadyContacted) {
+      //     return contactedFlats.forEach(obj => {
+      //       if (obj.exposeURL == flat.lister_url) {
+      //         return false;
+      //       }
+      //       return true;
+      //     });
+      //   } return true;
+      // });
 
-      getContact(newFlats);
+      // console.log("NEW FLATS ONLY : ", newFlats.length);
+
+      getContact(onlyImmoScout);
       return res.json(null);
     })
 
