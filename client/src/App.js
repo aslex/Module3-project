@@ -4,7 +4,6 @@ import "./App.css";
 import axios from "axios";
 import FormArea from "./components/FormArea";
 import FormCity from "./components/FormCity";
-import FormDate from "./components/FormDate";
 import FormFeatures from "./components/FormFeatures";
 import FormPrice from "./components/FormPrice";
 import FormSize from "./components/FormSize";
@@ -13,6 +12,7 @@ import Profile from "./components/Profile";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import FinalSubmit from "./components/FinalSubmit";
+import Navbar from "./components/Navbar";
 
 class App extends React.Component {
   state = {
@@ -34,6 +34,7 @@ class App extends React.Component {
   };
 
   updateButtonState = event => {
+    event.preventDefault();
     console.log(event.target.classList);
 
     if ([...event.target.classList].includes("features")) {
@@ -104,6 +105,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Navbar user={this.state.user} clearUser={this.setUser} />
         <Route
           exact
           path="/"
@@ -132,13 +134,6 @@ class App extends React.Component {
           render={props => <Login setUser={this.setUser} {...props} />}
         />
 
-        {/* <Route
-          path="/profile"
-          render={props => (
-            <Profile user={this.state.user} {...props} setUser={this.setUser} />
-          )}
-        /> */}
-
         <Route
           exact
           path="/profile"
@@ -146,7 +141,9 @@ class App extends React.Component {
             <Profile
               updateState={this.updateState}
               user={this.props.user}
+              updateButtonState={this.updateButtonState}
               {...props}
+              {...this.state}
             />
           )}
         />
@@ -184,20 +181,14 @@ class App extends React.Component {
           exact
           path="/form5"
           render={props => (
-            <FormArea updateState={this.updateButtonState} {...props} />
-          )}
-        />
-        <Route
-          exact
-          path="/form6"
-          render={props => (
-            <FormDate
-              updateState={this.updateState}
+            <FormArea
+              updateState={this.updateButtonState}
               finalSubmit={this.finalSubmit}
               {...props}
             />
           )}
         />
+
         <Route
           exact
           path="/finalSubmit"
