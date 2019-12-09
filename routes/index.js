@@ -20,20 +20,6 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
-router.get("/profile/:id", (req, res, next) => {
-  console.log("req params hereeeeeeee", req.params);
-  // get listings from user.contactedFlats
-  const id = req.params.id;
-  User.findOne({ _id: id })
-    .populate("contactedFlats")
-
-    .then(foundUser => {
-      res.json(foundUser);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
 
 const saveFlatData = listings => {
   // const userId =
@@ -109,7 +95,7 @@ const getFlats = searchObject => {
 };
 
 const getContact = newFlats => {
-  // newFlats.forEach(el => {
+  
   axios
     .get(
       "https://www.nestoria.de/detail/0000000112781900250594699/title/5/1-2?serpUid=&pt=1&ot=2&l=mitte&did=7_default&t_sec=9&t_or=45&t_pvid=null&utm_source=api&utm_medium=external"
@@ -157,17 +143,12 @@ router.post("/api/submit", (req, res) => {
       return res.json(null);
     })
 
-    // const newFlats = onlyImmoScout.filter(el => {
-    //   if (found.contactedFlats.includes(el.lister_url)) {
-    //     return false;
-    //   }
-    //   return true;
-    // });
+  
     .catch(err => {
       console.log(err);
     });
 
-  // getFlats(req.body)
+  
 });
 
 // router.post("/search/area", res => {
@@ -179,15 +160,6 @@ router.post("/api/submit", (req, res) => {
 // });
 
 router.get("/profile", (req, res) => {
-  // const id = req.params.id;
-  // console.log(req.user)
-  //const id = req.user._id;
-  // console.log(id)
-  // User.findById(id)
-  // .then(response => {
-  //   console.log(response);
-  //   res.json(response);
-  // });
 
   User.findById(req.user._id)
     .populate("contactedFlats")

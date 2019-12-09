@@ -134,7 +134,7 @@ class App extends React.Component {
           path="/auth/login"
           render={props => <Login setUser={this.setUser} {...props} />}
         />
-        <Route path={`/profile/${this.props.user._id}`} render={props => <Profile user={this.state.user} {...props} setUser={this.setUser}/>}/>
+        <Route path={`/profile`} render={props => <Profile user={this.state.user} {...props} setUser={this.setUser}/>}/>
 
         <Route
           exact

@@ -7,7 +7,7 @@ export class Profile extends Component {
   };
 
   componentDidMount() {
-    axios.get(`/profile/${this.props.user._id}`).then(res => {
+    axios.get(`/profile`).then(res => {
       console.log("component did mount", res.data);
 
       this.setState({
