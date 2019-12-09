@@ -14,19 +14,30 @@ export default class FormCity extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>FORM 1</h1>
-        <label htmlFor="city">enter your city:</label>
-        <input
-          onChange={this.handleChange}
-          type="text"
-          name="city"
-          id="city"
-          required
-        ></input>
-        <button type="Submit">Next</button>
-        <button onClick={this.props.history.goBack}>Back</button>
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <h3>FORM 1</h3>
+          <label htmlFor="city">enter your city:</label>
+          <input
+            onChange={this.handleChange}
+            type="text"
+            name="city"
+            id="city"
+            required
+          ></input>
+          <br></br>
+          <button onClick={this.props.history.goBack}>Back</button>
+          <button type="Submit">Next</button>
+        </form>
+        <ul id="progressbar">
+          <li class="on">City</li>
+          <li>Prize</li>
+          <li>Size</li>
+          <li>Area</li>
+          <li>++++</li>
+          <li>Text</li>
+        </ul>
+      </div>
     );
   }
 }

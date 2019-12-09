@@ -12,7 +12,7 @@ import Profile from "./components/Profile";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import FinalSubmit from "./components/FinalSubmit";
-import Navbar from "./components/Navbar";
+import Navigation from "./components/Navigation";
 
 class App extends React.Component {
   state = {
@@ -28,6 +28,20 @@ class App extends React.Component {
   };
   
   setUser = user => {
+    if (!user) {
+      this.setState({
+        user: null,
+        city: "",
+        size: 10,
+        rooms: 1,
+        bathrooms: 1,
+        minPrice: 0,
+        maxPrice: 0,
+        features: [],
+        neighborhoods: []
+      });
+      return;
+    }
     const {
       city,
       size,
@@ -114,8 +128,6 @@ class App extends React.Component {
       .put("/profile/update-preferences", { settings: this.state })
       .then(res => {
         console.log("front end response from updating preferences", res.data);
-     
-       
       });
   };
   finalSubmit = () => {
@@ -130,36 +142,17 @@ class App extends React.Component {
       });
   };
   componentDidMount() {
-    if(this.props.user){
-    const {
-      city,
-      size,
-      rooms,
-      bathrooms,
-      minPrice,
-      maxPrice,
-      features,
-      neighborhoods
-    } = this.props.user.preferences;
-
-    this.setState({
-     
-      city,
-      size,
-      rooms,
-      bathrooms,
-      minPrice,
-      maxPrice,
-      features,
-      neighborhoods
-    });
+    if (this.props.user) {
+      this.setUser(this.props.user);
+    }
   }
   }
 
   render() {
     return (
       <div className="App">
-        <Navbar user={this.state.user} clearUser={this.setUser} />
+        <Navigation user={this.state.user} clearUser={this.setUser} />
+
         <Route
           exact
           path="/"
@@ -167,16 +160,6 @@ class App extends React.Component {
             <Home user={this.state.user} clearUser={this.setUser} />
           )}
         />
-
-        {/* UPDATE profile route so its only available to the loggedin User: */}
-        {/* <Route exact path="/" render={() => (
-        //     loggedIn ? ( 
-        //       <Redirect to="/form1"/>
-        //     ) : (
-        //       <Signup/>
-        //     )
-        //   )}
-        // /> */}
 
         <Route
           path="/auth/signup"
