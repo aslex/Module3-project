@@ -146,7 +146,7 @@ class App extends React.Component {
       this.setUser(this.props.user);
     }
   }
-  }
+  
 
   render() {
     return (
