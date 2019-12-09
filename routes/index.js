@@ -20,7 +20,6 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
-
 const saveFlatData = listings => {
   // const userId =
   //   User.findOne({_id: }).then(foundUser => {
@@ -59,10 +58,13 @@ const filterData = listings => {
 };
 
 const getFlats = searchObject => {
-  // console.log("getFLats is called", searchObject);
+  console.log("SEARCH_OBJECT:", searchObject);
   const { minPrice, maxPrice, city, size, rooms, bathrooms } = searchObject;
   const neighborhoods = searchObject.neighborhoods;
+  console.log("NEIGHBORHOODS:", neighborhoods);
   const features = searchObject.features;
+  // const features = [minPrice, maxPrice, city, size, rooms, bathrooms];
+  console.log("FEATURES:", features);
   let keywords = "";
   if (features.length > 0) {
     keywords = features
@@ -71,6 +73,7 @@ const getFlats = searchObject => {
       })
       .join("&");
   }
+  console.log("KEYWORDS:", keywords);
   // console.log("these are the mapped keywords: ", keywords);
 
   const searchEveryNeighborhood = neighborhoods.map(el => {
@@ -86,7 +89,7 @@ const getFlats = searchObject => {
       const allListings = response.reduce((acc, el) => {
         return [el.data.response.listings, ...acc];
       }, []);
-      // console.log("this is what gets filtered: ", allListings);
+      console.log("this is what gets filtered: ", allListings);
       return filterData(allListings);
     })
     .catch(err => {
@@ -95,18 +98,19 @@ const getFlats = searchObject => {
 };
 
 const getContact = newFlats => {
-  
-  axios
-    .get(
-      "https://www.nestoria.de/detail/0000000112781900250594699/title/5/1-2?serpUid=&pt=1&ot=2&l=mitte&did=7_default&t_sec=9&t_or=45&t_pvid=null&utm_source=api&utm_medium=external"
-    )
+  const getEachId = newFlats.map(el => {
+    return axios.get(el.lister_url);
+  });
+  return Promise.all(getEachId)
     .then(res => {
-      console.log(
-        "just the head: ",
-        res.data.document.getElementbyTagName("head")
-      );
-
-      console.log(res.data);
+      console.log('response foreach applied to this: ', res)
+      let arrOfId = [];
+      res.forEach(el => {
+        let index = el.indexOf("https://www.immobilienscout24.de/expose");
+        let exposeID = el.substring(index + 40, index + 49);
+        arrOfId.push(exposeID);
+      });
+      console.log("EXPOSE ID HEREEEEEEE ", arrOfId);
     })
     .catch(err => {
       console.log(err);
@@ -121,10 +125,12 @@ router.post("/api/submit", (req, res) => {
   console.log("USER: ", user, search);
   getFlats(search)
     .then(onlyImmoScout => {
+      console.log("only immoscount listings: ", onlyImmoScout.length);
+
       let contactedFlats = user.contactedFlats.forEach(id => {
         return Flat.find({ _id: id }).then(flat => flat);
       });
-      console.log(".........", contactedFlats);
+      console.log("contacted flats: ", contactedFlats.length);
 
       const newFlats = onlyImmoScout.filter(flat => {
         if (contactedFlats) {
@@ -134,21 +140,18 @@ router.post("/api/submit", (req, res) => {
             }
             return true;
           });
-        } else return true;
+        } return true;
       });
 
-      console.log("NEW FLATS ONLY : ", newFlats);
-      // getContact(newFlats)
-      getContact(); //this is not working
+      console.log("NEW FLATS ONLY : ", newFlats.length);
+
+      getContact(newFlats);
       return res.json(null);
     })
 
-  
     .catch(err => {
       console.log(err);
     });
-
-  
 });
 
 // router.post("/search/area", res => {
@@ -160,7 +163,6 @@ router.post("/api/submit", (req, res) => {
 // });
 
 router.get("/profile", (req, res) => {
-
   User.findById(req.user._id)
     .populate("contactedFlats")
     .then(user => {

@@ -94,10 +94,10 @@ class App extends React.Component {
     axios
       .post("/api/submit", { search: this.state })
       .then(res => {
-        console.log("front end response: ", res);
+        console.log("front end response: ", res.data);
       })
       .catch(err => {
-        console.log(err.response);
+        console.log(err);
       });
   };
 
