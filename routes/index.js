@@ -194,17 +194,18 @@ const savePreferences = (user, search) => {
   User.updateOne(
     { _id: user._id },
     { preferences: search },
-    { returnOriginal: false }
+    { new: true }
   ).then(updated => {
     console.log("THIS IS THE UPDATED USER DOCUMENT: ", updated);
   });
 };
 
 router.post("/api/submit", (req, res) => {
-  console.log("back end request ----------- ", req.body);
+  console.log("SEARCH req.body ----------- ", req.body);
 
   const user = req.user;
   const search = req.body.search;
+  // const contactForm = req.body.contactForm;
   savePreferences(user, search);
 
   console.log("USER: ", user, search);
@@ -254,13 +255,39 @@ router.get("/profile", (req, res) => {
 });
 
 router.put("/profile/update-preferences", (req, res) => {
-  console.log('request to update:', req.body, 'user: ', req.user);
-  const { city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods } = req.body.settings;
-  User.updateOne({_id: req.user._id }, { preferences: {city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods}}, { new: true }).then(newUser => {
-    console.log('NEW USER: ', newUser);
-    res.json( {newUser: newUser, message: 'Your preferences have been updated!'})
-  })
- 
+  console.log("request to update:", req.body, "user: ", req.user);
+  const {
+    city,
+    size,
+    rooms,
+    bathrooms,
+    minPrice,
+    maxPrice,
+    features,
+    neighborhoods
+  } = req.body.settings;
+  User.updateOne(
+    { _id: req.user._id },
+    {
+      preferences: {
+        city,
+        size,
+        rooms,
+        bathrooms,
+        minPrice,
+        maxPrice,
+        features,
+        neighborhoods
+      }
+    },
+    { new: true }
+  ).then(newUser => {
+    console.log("NEW USER: ", newUser);
+    res.json({
+      newUser: newUser,
+      message: "Your preferences have been updated!"
+    });
+  });
 });
 
 module.exports = router;

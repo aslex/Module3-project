@@ -20,44 +20,47 @@ const userSchema = new Schema(
       lastname: String,
       phoneNumber: Number,
       emailAddress: String,
-      appointmentRequested: "YES",
+      appointmentRequested: String,
       message: String,
-      "address":{
+      address: {
+        "@xsi.type": String,
 
-        "@xsi.type":"common:Address",
-        
-        "street":"street",
-        
-        "houseNumber":"houseNumber",
-        
-        "postcode":"12345",
-        
-        "city":"city"
-        
-        },
-      contactMailCustomStyle: null,
+        street: String,
+
+        houseNumber: String,
+
+        postcode: String,
+
+        city: String
+      },
+      // contactMailCustomStyle: null,
       moveInDate: Date,
       petsInHousehold: String,
       numberOfPersons: Number,
       employmentRelationship: String,
       income: Number,
-      salutation: ['FEMALE', 'MALE', 'COMPANY', 'NO_SALUTATION'],
-      schufaInformationProvided: ["YES", "NO"],
-      schufaVerificationCode: null,
-      sendProfile: "NO",
-      profileImageUrl: null,
-      privacyPolicyAccepted: true,
-      company: null,
-      buyReason: null,
-      ownCapital: Number,
-      hasPreapproval: null,
-      lotAvailable: null,
-      numberOfRequiredWorkingPlaces: null,
-      plannedInvestment: null,
-      commercialUsage: null,
-      applicationPackageCompleted: null
-
-    }
+      salutation: {
+        type: String,
+        enum: ["FEMALE", "MALE", "COMPANY", "NO_SALUTATION"]
+      },
+      schufaInformationProvided: {
+        type: String,
+        enum: ["YES", "NO"]
+      },
+      // schufaVerificationCode: null,
+      sendProfile: String,
+      // profileImageUrl: null,
+      privacyPolicyAccepted: Boolean,
+      // company: null,
+      // buyReason: null,
+      ownCapital: Number
+      // hasPreapproval: null,
+      // lotAvailable: null,
+      // numberOfRequiredWorkingPlaces: null,
+      // plannedInvestment: null,
+      // commercialUsage: null,
+      // applicationPackageCompleted: null
+    },
     contactedFlats: [
       {
         type: Schema.Types.ObjectId,

@@ -26,8 +26,8 @@ export default class FormCity extends React.Component {
             required
           ></input>
           <br></br>
+          <button type="submit">Next</button>
           <button onClick={this.props.history.goBack}>Back</button>
-          <button type="Submit">Next</button>
         </form>
         <ul id="progressbar">
           <li class="">

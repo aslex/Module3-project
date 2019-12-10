@@ -24,9 +24,24 @@ class App extends React.Component {
     minPrice: 0,
     maxPrice: 0,
     features: [],
-    neighborhoods: []
+    neighborhoods: [],
+    contactForm: {
+      firstname: "",
+      lastname: "",
+      phoneNumber: 0,
+      emailAddress: "",
+      appointmentRequested: "",
+      message: "",
+      address: {
+        "@xsi.type": "",
+        street: "",
+        houseNumber: "",
+        postcode: "",
+        city: ""
+      }
+    }
   };
-  
+
   setUser = user => {
     if (!user) {
       this.setState({
@@ -52,6 +67,14 @@ class App extends React.Component {
       features,
       neighborhoods
     } = user.preferences;
+    // const {
+    //   firstname,
+    //   lastname,
+    //   phoneNumber,
+    //   appointmentRequested = "YES",
+    //   emailAddress
+    // } = user.contactForm;
+    // const { street, houseNumber, postcode } = user.contactForm.address;
     this.setState({
       // ...this.state,
       user,
@@ -62,7 +85,10 @@ class App extends React.Component {
       minPrice,
       maxPrice,
       features,
-      neighborhoods
+      neighborhoods,
+      contactForm: {
+        ...user.contactForm
+      }
     });
   };
 
@@ -146,7 +172,6 @@ class App extends React.Component {
       this.setUser(this.props.user);
     }
   }
-  
 
   render() {
     return (
