@@ -12,6 +12,17 @@ export default class FormCity extends React.Component {
     return this.props.history.push("/form2");
   };
 
+  // componentDidMount -> get user Info
+  // IF User has already filled out this form -> check user obkect
+  // redirect to profile
+  componentDidMount = () => {
+    console.log(this.props);
+    const { user } = this.props;
+    if (user.preferences.city || user) {
+      this.props.history.push("/");
+    }
+  };
+
   render() {
     return (
       <div>
@@ -27,19 +38,18 @@ export default class FormCity extends React.Component {
           ></input>
           <br></br>
           <button type="submit">Next</button>
-          <button onClick={this.props.history.goBack}>Back</button>
         </form>
         <ul id="progressbar">
-          <li class="">
+          <li className="hide">
             <img src="./images/logo.png" alt="" width="30px"></img>
           </li>
-          <li>
+          <li className="hide">
             <img src="./images/logo.png" alt="" width="30px"></img>
           </li>
-          <li>
+          <li className="hide">
             <img src="./images/logo.png" alt="" width="30px"></img>
           </li>
-          <li>
+          <li className="hide">
             <img src="./images/logo.png" alt="" width="30px"></img>
           </li>
           <li>

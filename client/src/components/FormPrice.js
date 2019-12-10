@@ -10,6 +10,15 @@ export default class FormPrice extends Component {
     e.preventDefault();
     return this.props.history.push("/form4");
   };
+
+  componentDidMount = () => {
+    console.log(this.props);
+    const { user } = this.props;
+    if (user.preferences.city || user) {
+      this.props.history.push("/");
+    }
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>

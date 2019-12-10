@@ -28,6 +28,14 @@ export default class FormArea extends Component {
     this.props.updateState(event);
   };
 
+  componentDidMount = () => {
+    console.log(this.props);
+    const { user } = this.props;
+    if (user.preferences.city || user) {
+      this.props.history.push("/");
+    }
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>

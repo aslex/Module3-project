@@ -12,6 +12,14 @@ export default class FormSize extends Component {
     return this.props.history.push("/form3");
   };
 
+  componentDidMount = () => {
+    console.log(this.props);
+    const { user } = this.props;
+    if (user.preferences.city || user) {
+      this.props.history.push("/");
+    }
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
