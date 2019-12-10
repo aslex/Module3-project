@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { Alert, Form, Button, Col } from "react-bootstrap";
 
 export default class FormCity extends React.Component {
   handleChange = event => {
@@ -18,7 +19,7 @@ export default class FormCity extends React.Component {
   componentDidMount = () => {
     console.log(this.props);
     const { user } = this.props;
-    if (user.preferences.city || user) {
+    if (user.preferences.city && user) {
       this.props.history.push("/");
     }
   };
@@ -26,19 +27,21 @@ export default class FormCity extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <h3>FORM 1</h3>
-          <label htmlFor="city">enter your city:</label>
-          <input
-            onChange={this.handleChange}
-            type="text"
-            name="city"
-            id="city"
-            required
-          ></input>
-          <br></br>
+          <Form.Group as={Col}>
+            <Form.Label>City</Form.Label>
+            <Form.Control
+              onChange={this.handleChange}
+              type="text"
+              name="city"
+              id="city"
+              required
+            />
+          </Form.Group>
           <button type="submit">Next</button>
-        </form>
+        </Form>
+
         <ul id="progressbar">
           <li className="hide">
             <img src="./images/logo.png" alt="" width="30px"></img>

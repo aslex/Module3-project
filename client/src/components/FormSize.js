@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert, Form, Button, Col } from "react-bootstrap";
 
 export default class FormSize extends Component {
   handleChange = event => {
@@ -15,46 +16,72 @@ export default class FormSize extends Component {
   componentDidMount = () => {
     console.log(this.props);
     const { user } = this.props;
-    if (user.preferences.city || user) {
+    if (user.preferences.city && user) {
       this.props.history.push("/");
     }
   };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>FORM 2</h1>
-        <h1>minimum size requirements</h1>
-        <label htmlFor="size">Total area: </label>
-        <input
-          onChange={this.handleChange}
-          type="number"
-          id="size"
-          name="size"
-          min="10"
-        />
-        sqm
-        <br />
-        <label htmlFor="rooms">rooms: </label>
-        <input
-          onChange={this.handleChange}
-          type="number"
-          id="rooms"
-          name="rooms"
-          min="1"
-          step=".5"
-        />
-        <label htmlFor="bathrooms">bathrooms: </label>
-        <input
-          onChange={this.handleChange}
-          type="number"
-          name="bathrooms"
-          id="bathrooms"
-        ></input>
-        <br></br>
-        <button type="submit">Next</button>
-        <button onClick={this.props.history.goBack}>Back</button>
-      </form>
+      <div>
+        <Form onSubmit={this.handleSubmit}>
+          <h3>FORM 2</h3>
+          <Form.Group as={Col}>
+            <Form.Label>Total area in sqm</Form.Label>
+            <Form.Control
+              onChange={this.handleChange}
+              type="number"
+              id="size"
+              name="size"
+              min="10"
+            />
+          </Form.Group>
+
+          <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label>Rooms</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                type="number"
+                id="rooms"
+                name="rooms"
+                min="1"
+                step=".5"
+              />
+            </Form.Group>
+
+            <Form.Group as={Col}>
+              <Form.Label>Bathrooms</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                type="number"
+                name="bathrooms"
+                id="bathrooms"
+              />
+            </Form.Group>
+          </Form.Row>
+          <button type="submit">Next</button>
+          <button onClick={this.props.history.goBack}>Back</button>
+        </Form>
+
+        <ul id="progressbar">
+          <li className="hide">
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li className="hide">
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li className="hide">
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+        </ul>
+      </div>
     );
   }
 }

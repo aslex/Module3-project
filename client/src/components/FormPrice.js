@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert, Form, Button, Col } from "react-bootstrap";
 
 export default class FormPrice extends Component {
   handleChange = event => {
@@ -14,33 +15,62 @@ export default class FormPrice extends Component {
   componentDidMount = () => {
     console.log(this.props);
     const { user } = this.props;
-    if (user.preferences.city || user) {
+    if (user.preferences.city && user) {
       this.props.history.push("/");
     }
   };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>FORM 3</h1>
-        <h1>Rent:</h1>
-        <label htmlFor="minPrice">min: </label>
-        <input
-          onChange={this.handleChange}
-          type="number"
-          id="minPrice"
-          name="minPrice"
-        />
-        <label htmlFor="maxPrice">max: </label>
-        <input
-          onChange={this.handleChange}
-          type="number"
-          id="maxPrice"
-          name="maxPrice"
-        ></input>
-        <button type="submit">Next</button>
-        <button onClick={this.props.history.goBack}>Back</button>
-      </form>
+      <div>
+        <Form onSubmit={this.handleSubmit}>
+          <h3>FORM 3</h3>
+
+          <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label>Min price</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                type="number"
+                id="minPrice"
+                name="minPrice"
+                min="50"
+                placeholder="0"
+              />
+            </Form.Group>
+
+            <Form.Group as={Col}>
+              <Form.Label>Max price</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                type="number"
+                id="maxPrice"
+                name="maxPrice"
+              />
+            </Form.Group>
+          </Form.Row>
+          <button type="submit">Next</button>
+          <button onClick={this.props.history.goBack}>Back</button>
+        </Form>
+
+        <ul id="progressbar">
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li className="hide">
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li className="hide">
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+        </ul>
+      </div>
     );
   }
 }

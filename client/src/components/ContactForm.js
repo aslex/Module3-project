@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { Alert, Form, Button, Col } from "react-bootstrap";
 
 export default class ContactForm extends Component {
+  handleChange = event => {
+    console.log("handlechange");
+    this.props.updateState(event);
+  };
+
   handleSubmit = e => {
     console.log("handlesubmit");
     e.preventDefault();
@@ -12,7 +17,7 @@ export default class ContactForm extends Component {
   componentDidMount = () => {
     console.log(this.props);
     const { user } = this.props;
-    if (user.preferences.city || user) {
+    if (user.preferences.city && user) {
       this.props.history.push("/");
     }
   };
@@ -26,6 +31,7 @@ export default class ContactForm extends Component {
             <Form.Group as={Col}>
               <Form.Label>First Name</Form.Label>
               <Form.Control
+                onChange={this.handleChange}
                 name="firstName"
                 type="text"
                 placeholder="First Name"
@@ -35,6 +41,7 @@ export default class ContactForm extends Component {
             <Form.Group as={Col}>
               <Form.Label>Last Name</Form.Label>
               <Form.Control
+                onChange={this.handleChange}
                 name="lastName"
                 type="text"
                 placeholder="Last Name"
@@ -45,6 +52,7 @@ export default class ContactForm extends Component {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
+              onChange={this.handleChange}
               name="phoneNumber"
               type="text"
               placeholder="Enter phone"
@@ -54,6 +62,7 @@ export default class ContactForm extends Component {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
+              onChange={this.handleChange}
               name="emailAddress"
               type="email"
               placeholder="Enter email"
@@ -63,6 +72,7 @@ export default class ContactForm extends Component {
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Example textarea</Form.Label>
             <Form.Control
+              onChange={this.handleChange}
               name="message"
               as="textarea"
               rows="3"
@@ -73,7 +83,11 @@ export default class ContactForm extends Component {
           <Form.Row>
             <Form.Group as={Col} controlId="formGridZip">
               <Form.Label>Street</Form.Label>
-              <Form.Control name="street" placeholder="1234 Main St" />
+              <Form.Control
+                name="street"
+                onChange={this.handleChange}
+                placeholder="1234 Main St"
+              />
             </Form.Group>
 
             <Form.Group controlId="formGridAddress2">
@@ -85,12 +99,20 @@ export default class ContactForm extends Component {
           <Form.Row>
             <Form.Group as={Col} controlId="formGridZip">
               <Form.Label>Zip</Form.Label>
-              <Form.Control name="postcode" placeholder="12345" />
+              <Form.Control
+                onChange={this.handleChange}
+                name="postcode"
+                placeholder="12345"
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridCity">
               <Form.Label>City</Form.Label>
-              <Form.Control name="city" placeholder="Berlin" />
+              <Form.Control
+                name="city"
+                placeholder="Berlin"
+                onChange={this.handleChange}
+              />
             </Form.Group>
           </Form.Row>
 
