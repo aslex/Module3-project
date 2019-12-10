@@ -15,6 +15,7 @@ const MongoStore = require('connect-mongo')(session);
 // const flash      = require("connect-flash");
 
 require("./configs/passport");
+require('./configs/nodecron')
 
 mongoose
   .connect('mongodb://localhost/module3-project', {useNewUrlParser: true})
@@ -50,16 +51,6 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-
-// hbs.registerHelper('ifUndefined', (value, options) => {
-//   if (arguments.length < 2)
-//       throw new Error("Handlebars Helper ifUndefined needs 1 parameter");
-//   if (typeof value !== undefined ) {
-//       return options.inverse(this);
-//   } else {
-//       return options.fn(this);
-//   }
-// });
 
 // ADD SESSION SETTINGS HERE:
 
@@ -100,5 +91,7 @@ app.use('/', index);
 
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
+
+
 
 module.exports = app;
