@@ -132,24 +132,32 @@ const sendEmail = (arrOfId, userId) => {
 
 //END POST REQUEST CODE
 
-const saveFlatData = listings => {
-  // const userId =
-  //   User.findOne({_id: }).then(foundUser => {
-  //   foundUser.contactedFlats.push(newFlat._id)
-  // })
+const saveFlatData = (listings, user) => {
   listings.forEach(flat => {
-    Flat.create({
-      size: flat.size,
-      price: flat.price_formatted,
-      imageURL: flat.img_url,
-      exposeURL: flat.lister_url,
-      rooms: flat.bedroom_number
-    }).then(newflat => {
-      User.updateOne(
-        { _id: userId },
-        { contactedFlats: [newflat, ...contactedFlats] }
-      );
-    });
+    //need to filter to not create multiple documents for same flat
+    Flat.findOne({ exposeURL: flat.lister_url })
+      .then(found => {
+        if (!found) {
+          return Flat.create({
+            size: flat.size,
+            price: flat.price_formatted,
+            imageURL: flat.img_url,
+            exposeURL: flat.lister_url,
+            rooms: flat.bedroom_number
+          }).then(newflat => {
+            // console.log("NEW FLAT CREATED", newflat);
+            return User.updateOne(
+              { _id: user._id },
+              { $push: { contactedFlats: newflat._id } }
+            ).then(data => {
+              // console.log(data);
+            });
+          });
+        }
+      })
+      .catch(err => {
+        console.log("error in saveFlatData ", err);
+      });
   });
 };
 
@@ -248,12 +256,11 @@ const getContact = newFlats => {
     });
     console.log("EXPOSE ID HEREEEEEEE ", arrOfId);
     return arrOfId;
-  
   });
 };
 
 const savePreferences = (user, search) => {
-  console.log('save preferences called -user: ', user, ' -search: ', search)
+  console.log("save preferences called -user: ", user, " -search: ", search);
   const {
     city,
     size,
@@ -264,8 +271,16 @@ const savePreferences = (user, search) => {
     features,
     neighborhoods
   } = search;
-const { firstname,  lastname,  phoneNumber,  appointmentRequested,  emailAddress, street, houseNumber, postcode} = search.contactForm;
-
+  const {
+    firstname,
+    lastname,
+    phoneNumber,
+    appointmentRequested,
+    emailAddress,
+    street,
+    houseNumber,
+    postcode
+  } = search;
 
   User.updateOne(
     { _id: user._id },
@@ -281,9 +296,15 @@ const { firstname,  lastname,  phoneNumber,  appointmentRequested,  emailAddress
         neighborhoods
       },
       contactForm: {
-        firstname,  lastname,  phoneNumber,  appointmentRequested,  emailAddress,
+        firstname,
+        lastname,
+        phoneNumber,
+        appointmentRequested,
+        emailAddress,
         address: {
-          street, houseNumber, postcode
+          street,
+          houseNumber,
+          postcode
         }
       }
     },
@@ -294,26 +315,29 @@ const { firstname,  lastname,  phoneNumber,  appointmentRequested,  emailAddress
 };
 
 const filterContactedFlats = (onlyImmoScout, allIds) => {
-
-  Flat.find({ _id: { $in: allIds } }).then(alreadyContacted => {
-    // console.log(flats) => array of all the flats
-    console.log("contacted flats: ", alreadyContacted.length);
-const newFlats =
-  onlyImmoScout.filter(flat => {
-      if (alreadyContacted) {
-        for (let i = 0; i < alreadyContacted.length; i++) {
-          const obj = alreadyContacted[i];
-          if (obj.exposeURL == flat.lister_url) {
-            return false;
+  return Flat.find({ _id: { $in: allIds } })
+    .then(alreadyContacted => {
+      // console.log(flats) => array of all the flats
+      console.log("contacted flats: ", alreadyContacted.length);
+      const newFlats = onlyImmoScout.filter(flat => {
+        if (alreadyContacted) {
+          for (let i = 0; i < alreadyContacted.length; i++) {
+            const obj = alreadyContacted[i];
+            if (obj.exposeURL == flat.lister_url) {
+              return false;
+            }
           }
+          return true;
         }
         return true;
-      }
-      return true;
+      });
+
+      return newFlats;
+    })
+    .catch(err => {
+      console.log(err);
     });
-   
-})
-}
+};
 
 router.post("/api/submit", (req, res) => {
   console.log("SEARCH req.body ----------- ", req.body);
@@ -326,23 +350,29 @@ router.post("/api/submit", (req, res) => {
   console.log("USER: ", user, search);
   getFlats(search)
     .then(onlyImmoScout => {
-      console.log("only immoscout listings: ", onlyImmoScout.length);
-      console.log(user.contactedFlats);
+      // console.log("only immoscout listings: ", onlyImmoScout.length);
+      // console.log(user.contactedFlats);
 
-      // filterContactedFlats(onlyImmoScout, user.contactedFlats).then(res => {
-      //   console.log("NEW FLATS ONLY : ", res.length);
-      // })
+      filterContactedFlats(onlyImmoScout, user.contactedFlats).then(
+        newFlats => {
+          console.log("NEW FLATS ONLY : ", newFlats.length);
 
-        // newFlats is filtered from the contacted flats
-  
+          saveFlatData(newFlats, user);
 
-      getContact(onlyImmoScout).then(arrOfId => {
-        console.log('emails will now be sent to ', arrOfId.length, ' flats');
+          getContact(newFlats).then(arrOfId => {
+            console.log("emails will now be sent to ", arrOfId.length, " flats");
+    
+            //---------- UNCOMMENT THIS TO ACTUALLY SEND EMAILS TO LISTINGS -----------------
+            // sendEmail(arrOfId, req.user._id)
+            return res.json(null);
+          });
+        }
+      );
 
-        //---------- UNCOMMENT THIS TO ACTUALLY SEND EMAILS TO LISTINGS -----------------
-        // sendEmail(arrOfId, req.user._id);
-      });
-      return res.json(null);
+      // newFlats is filtered from the contacted flats
+
+
+
     })
 
     .catch(err => {
