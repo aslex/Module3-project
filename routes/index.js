@@ -6,6 +6,7 @@ const Flat = require("../models/Flat");
 const crypto = require("crypto");
 const OAuth = require("oauth-1.0a");
 const request = require("request-promise");
+const oauthSignature = require("oauth-signature");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -22,6 +23,114 @@ router.get("/", (req, res, next) => {
 
   res.render("index");
 });
+
+// BEGIN POST REQUEST CODE
+
+const sendEmail = (arrOfId, userId) => {
+  User.findOne({ _id: userId }).then(user => {
+    const { contactForm } = user;
+    const requests = [];
+
+    let i = 1;
+    while (i <= arrOfId.length) {
+      const nonce = () => {
+        const nonceLen = 32;
+        return crypto
+          .randomBytes(Math.ceil((nonceLen * 3) / 4))
+          .toString("base64") // convert to base64 format
+          .slice(0, nonceLen) // return required number of characters
+          .replace(/\+/g, "0") // replace '+' with '0'
+          .replace(/\//g, "0"); // replace '/' with '0'
+      };
+
+      const signParameters = (
+        method,
+        url,
+        {
+          oauth_token,
+          oauth_consumer_key,
+          oauth_consumer_secret,
+          oauth_token_secret
+        },
+        parameters = {}
+      ) => {
+        const urlParams = Object.assign(
+          {},
+          {
+            oauth_consumer_key,
+            oauth_nonce: nonce(),
+            oauth_signature_method: "HMAC-SHA1",
+            oauth_timestamp: Math.floor(Date.now() / 1000),
+            oauth_token: oauth_token,
+            oauth_version: "1.0"
+          },
+          parameters
+        );
+
+        urlParams.oauth_signature = encodeURIComponent(
+          oauthSignature.generate(
+            method,
+            url,
+            urlParams,
+            oauth_consumer_secret,
+            oauth_token_secret,
+            { encodeSignature: false }
+          )
+        );
+
+        return urlParams;
+      };
+
+      const requestData = {
+        method: "POST",
+        url: `https://rest.immobilienscout24.de/restapi/api/search/v1.0/expose/${arrOfId[i]}/contact`,
+        form: contactForm
+      };
+
+      const signed = signParameters(requestData.method, requestData.url, {
+        oauth_token: process.env.ACCESS_TOKEN,
+        oauth_consumer_key: process.env.SYSTEM_KEY,
+        oauth_consumer_secret: process.env.API_SECRET,
+        oauth_token_secret: process.env.TOKEN_SECRET
+      });
+
+      let authorizationHeader = `${Object.keys(signed).reduce(
+        (acc, val, i, arr) =>
+          acc.concat(`${val}="${signed[val]}"${i < arr.length - 1 ? "," : ""}`),
+        "OAuth "
+      )}`;
+
+      var options = {
+        method: "POST",
+        url: `https://rest.immobilienscout24.de/restapi/api/search/v1.0/expose/${arrOfId[i]}/contact`,
+        headers: {
+          Authorization: authorizationHeader,
+          "Content-Type": "application/json"
+        },
+        body: contactForm,
+        json: true
+      };
+
+      i++;
+      requests.push(
+        request(options)
+          .then(response => {
+            console.log("YOU DID IT ========= !!!!!!!!  ", response);
+            return response.data;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      );
+    }
+
+    Promise.all(requests).then(responses => {
+      console.log(responses);
+    });
+  });
+};
+
+//END POST REQUEST CODE
 
 const saveFlatData = listings => {
   // const userId =
@@ -123,83 +232,77 @@ const getContact = newFlats => {
   const getEachId = newFlats.map(el => {
     return axios.get(el.lister_url, { validateStatus: false });
   });
-  return Promise.all(getEachId)
-    .then(res => {
-      if (res.status == 404) {
+  return Promise.all(getEachId).then(res => {
+    if (res.status == 404) {
+      return;
+    }
+    // console.log("response foreach applied to this: ", res[0].data);
+    let arrOfId = [];
+    res.forEach(el => {
+      if (el.status === 404) {
         return;
       }
-      console.log("response foreach applied to this: ", res[0].data);
-      let arrOfId = [];
-      res.forEach(el => {
-        if (el.status === 404) {
-          return;
-        }
-        let index = el.data.indexOf("https://www.immobilienscout24.de/expose");
-        let exposeID = el.data.substring(index + 40, index + 49);
-        if (exposeID) {
-          arrOfId.push(exposeID);
-        }
-      });
-      console.log("EXPOSE ID HEREEEEEEE ", arrOfId);
-      // const headers = {
-      //   Accept: "application/json",
-      //   "Content-Type": "application/json"
-      // };
-      const messageBody = {
-        "expose.contactForm": {
-          "@xmlns": {
-            common: "http://rest.immobilienscout24.de/schema/common/1.0"
-          },
-          firstname: "firstname",
-          lastname: "lastname",
-          phoneNumber: "phoneNumber",
-          emailAddress: "emailAddress@mail.de",
-          appointmentRequested: "YES",
-          message: "message",
-          address: {
-            "@xsi.type": "common:Address",
-            street: "street",
-            houseNumber: "houseNumber",
-            postcode: "12345",
-            city: "city"
-          },
-          salutation: "FEMALE"
-        }
-      };
-      const contactList = arrOfId.map((el, i) => {
-        const requestData = {
-          url: `https://rest.immobilienscout24.de/restapi/api/search/v1.0/expose/${el}/contact`,
-          method: "POST",
-          data: messageBody
-        };
-
-        return request({
-          url: `https://rest.immobilienscout24.de/restapi/api/search/v1.0/expose/${el}/contact`,
-          method: "POST",
-          form: oauth.authorize(requestData, token),
-          json: true
-        });
-      });
-      let b;
-      return Promise.all(contactList).then(res => {
-        console.log(res);
-      });
-    })
-    .catch(err => {
-      console.log("WITH HEADERS", err);
+      let index = el.data.indexOf("https://www.immobilienscout24.de/expose");
+      let exposeID = parseInt(el.data.substring(index + 40, index + 49));
+      if (exposeID) {
+        arrOfId.push(exposeID);
+      }
     });
+    console.log("EXPOSE ID HEREEEEEEE ", arrOfId);
+    return arrOfId;
+    const messageBody = {
+      "expose.contactForm": {
+        "@xmlns": {
+          common: "http://rest.immobilienscout24.de/schema/common/1.0"
+        },
+        firstname: "firstname",
+        lastname: "lastname",
+        phoneNumber: "phoneNumber",
+        emailAddress: "emailAddress@mail.de",
+        appointmentRequested: "YES",
+        message: "message",
+        address: {
+          "@xsi.type": "common:Address",
+          street: "street",
+          houseNumber: "houseNumber",
+          postcode: "12345",
+          city: "city"
+        },
+        salutation: "FEMALE"
+      }
+    };
+  });
 };
 
 const savePreferences = (user, search) => {
-  const { city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods } = search;
-  
+  const {
+    city,
+    size,
+    rooms,
+    bathrooms,
+    minPrice,
+    maxPrice,
+    features,
+    neighborhoods
+  } = search;
+
   User.updateOne(
     { _id: user._id },
-    { preferences: {city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods},
-    contactForm:{
-      ...search.contactForm
+    {
+      preferences: {
+        city,
+        size,
+        rooms,
+        bathrooms,
+        minPrice,
+        maxPrice,
+        features,
+        neighborhoods
+      },
+      contactForm: {
+        ...search.contactForm
       }
-   },
+    },
     { new: true }
   ).then(updated => {
     console.log("THIS IS THE UPDATED USER DOCUMENT: ", updated);
@@ -220,27 +323,33 @@ router.post("/api/submit", (req, res) => {
       console.log("only immoscout listings: ", onlyImmoScout.length);
       console.log(user.contactedFlats);
 
-      // let allIds = user.contactedFlats
-      // let alreadyContacted =
-      //   Flat.find({ _id: { $all: allIds } })
-      //   .then(flat => flat);
+      let allIds = user.contactedFlats;
+      Flat.find({ _id: { $in: allIds } }).then(alreadyContacted => {
+        // console.log(flats) => array of all the flats
+        console.log("contacted flats: ", alreadyContacted.length);
 
-      // console.log("contacted flats: ", alreadyContacted.length);
+        const newFlats = onlyImmoScout.filter(flat => {
+          if (alreadyContacted) {
+            for (let i = 0; i < contactedFlats.length; i++) {
+              const obj = contactedFlats[i];
+              if (obj.exposeURL == flat.lister_url) {
+                return false;
+              }
+            }
+            return true;
+          }
+          return true;
+        });
 
-      // const newFlats = onlyImmoScout.filter(flat => {
-      //   if (alreadyContacted) {
-      //     return contactedFlats.forEach(obj => {
-      //       if (obj.exposeURL == flat.lister_url) {
-      //         return false;
-      //       }
-      //       return true;
-      //     });
-      //   } return true;
-      // });
+        // newFlats is filtered from the contacted flats
+      });
 
       // console.log("NEW FLATS ONLY : ", newFlats.length);
 
-      getContact(onlyImmoScout);
+      getContact(onlyImmoScout).then(arrOfId => {
+        console.log("IS THIS A USER ????????? ", req.user);
+        sendEmail(arrOfId, req.user._id);
+      });
       return res.json(null);
     })
 
