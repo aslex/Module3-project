@@ -10,16 +10,6 @@ const oauthSignature = require("oauth-signature");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
-  // axios
-  //   .get(
-  //     "https://rest.immobilienscout24.de/restapi/security/oauth/request_token"
-  //   )
-  //   .then(res => {
-  //     console.log(res);
-  //     axios.get(
-  //       `https://rest.immobilienscout24.de/restapi/security/oauth/confirm_access?oauth_token=${res.data}`
-  //     );
-  //   });
 
   res.render("index");
 });
