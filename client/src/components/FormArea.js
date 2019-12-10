@@ -18,7 +18,6 @@ export default class FormArea extends Component {
   handleSubmit = e => {
     console.log("handlesubmit");
     e.preventDefault();
-    this.props.finalSubmit(e);
     return this.props.history.push("/form6");
   };
 
