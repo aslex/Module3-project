@@ -177,94 +177,102 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Navigation user={this.state.user} clearUser={this.setUser} />
+        <Switch>
+          <Route
+            exact
+            path="/form1"
+            render={props => (
+              <FormCity updateState={this.updateState} {...props} />
+            )}
+          />
 
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <Home user={this.state.user} clearUser={this.setUser} />
-          )}
-        />
+          <Route
+            exact
+            path="/form2"
+            render={props => (
+              <FormSize updateState={this.updateState} {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/form3"
+            render={props => (
+              <FormPrice updateState={this.updateState} {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/form4"
+            render={props => (
+              <FormFeatures updateState={this.updateButtonState} {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/form5"
+            render={props => (
+              <FormArea
+                updateState={this.updateButtonState}
+                setUser={this.setUser}
+                {...props}
+              />
+            )}
+          />
 
-        <Route
-          path="/auth/signup"
-          render={props => <Signup setUser={this.setUser} {...props} />}
-        />
+          <Route
+            exact
+            path="/form6"
+            render={props => (
+              <ContactForm
+                setUser={this.setUser}
+                finalSubmit={this.finalSubmit}
+                {...props}
+              />
+            )}
+          />
 
-        <Route
-          path="/auth/login"
-          render={props => <Login setUser={this.setUser} {...props} />}
-        />
+          <>
+            <Navigation user={this.state.user} clearUser={this.setUser} />
 
-        <Route
-          exact
-          path="/profile"
-          render={props => (
-            <Profile
-              finalSubmit={this.finalSubmit}
-              updateState={this.updateState}
-              user={this.props.user}
-              updateButtonState={this.updateButtonState}
-              updateUserPreferences={this.updateUserPreferences}
-              {...props}
-              {...this.state}
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Home user={this.state.user} clearUser={this.setUser} />
+              )}
             />
-          )}
-        />
-
-        <Route
-          exact
-          path="/form1"
-          render={props => (
-            <FormCity updateState={this.updateState} {...props} />
-          )}
-        />
-
-        <Route
-          exact
-          path="/form2"
-          render={props => (
-            <FormSize updateState={this.updateState} {...props} />
-          )}
-        />
-        <Route
-          exact
-          path="/form3"
-          render={props => (
-            <FormPrice updateState={this.updateState} {...props} />
-          )}
-        />
-        <Route
-          exact
-          path="/form4"
-          render={props => (
-            <FormFeatures updateState={this.updateButtonState} {...props} />
-          )}
-        />
-        <Route
-          exact
-          path="/form5"
-          render={props => (
-            <FormArea
-              updateState={this.updateButtonState}
-              finalSubmit={this.finalSubmit}
-              {...props}
+            <Route
+              path="/auth/signup"
+              render={props => <Signup setUser={this.setUser} {...props} />}
             />
-          )}
-        />
-
-        <Route
-          exact
-          path="/form6"
-          render={props => <ContactForm setUser={this.setUser} {...props} />}
-        />
-
-        <Route
-          exact
-          path="/finalSubmit"
-          render={props => <FinalSubmit setUser={this.setUser} {...props} />}
-        />
+            <Route
+              path="/auth/login"
+              render={props => <Login setUser={this.setUser} {...props} />}
+            />
+            <Route
+              exact
+              path="/profile"
+              render={props => (
+                <Profile
+                  finalSubmit={this.finalSubmit}
+                  updateState={this.updateState}
+                  user={this.props.user}
+                  updateButtonState={this.updateButtonState}
+                  updateUserPreferences={this.updateUserPreferences}
+                  {...props}
+                  {...this.state}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/finalSubmit"
+              render={props => (
+                <FinalSubmit setUser={this.setUser} {...props} />
+              )}
+            />
+          </>
+        </Switch>
       </div>
     );
   }
