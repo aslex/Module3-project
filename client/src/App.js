@@ -13,6 +13,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import FinalSubmit from "./components/FinalSubmit";
 import Navigation from "./components/Navigation";
+import ContactForm from "./components/ContactForm";
 
 class App extends React.Component {
   state = {
@@ -251,6 +252,12 @@ class App extends React.Component {
               {...props}
             />
           )}
+        />
+
+        <Route
+          exact
+          path="/form6"
+          render={props => <ContactForm setUser={this.setUser} {...props} />}
         />
 
         <Route

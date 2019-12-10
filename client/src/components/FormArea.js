@@ -19,7 +19,7 @@ export default class FormArea extends Component {
     console.log("handlesubmit");
     e.preventDefault();
     this.props.finalSubmit(e);
-    return this.props.history.push("/finalSubmit");
+    return this.props.history.push("/form6");
   };
 
   handleClick = event => {
@@ -95,8 +95,8 @@ export default class FormArea extends Component {
         >
           Reinickendorf
         </button>
+        <button type="submit">Next</button>
         <button onClick={this.props.history.goBack}>Back</button>
-        <button type="submit">SUBMIT FORM</button>
       </form>
     );
   }

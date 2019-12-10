@@ -3,6 +3,7 @@ import React from "react";
 export default class FinalSubmit extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
+    // this.props.finalSubmit(e);
     return this.props.history.push("/profile");
   };
 
