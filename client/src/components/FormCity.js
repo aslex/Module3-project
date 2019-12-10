@@ -30,12 +30,21 @@ export default class FormCity extends React.Component {
           <button type="Submit">Next</button>
         </form>
         <ul id="progressbar">
-          <li class="on">City</li>
-          <li>Prize</li>
-          <li>Size</li>
-          <li>Area</li>
-          <li>++++</li>
-          <li>Text</li>
+          <li class="">
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
+          <li>
+            <img src="./images/logo.png" alt="" width="30px"></img>
+          </li>
         </ul>
       </div>
     );
