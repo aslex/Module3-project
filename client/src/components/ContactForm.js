@@ -5,7 +5,7 @@ export default class ContactForm extends Component {
   handleSubmit = e => {
     console.log("handlesubmit");
     e.preventDefault();
-    // this.props.finalSubmit(e);
+    this.props.finalSubmit(e);
     return this.props.history.push("/finalSubmit");
   };
 

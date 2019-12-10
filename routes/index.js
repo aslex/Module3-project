@@ -191,9 +191,15 @@ const getContact = newFlats => {
 };
 
 const savePreferences = (user, search) => {
+  const { city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods } = search;
+  
   User.updateOne(
     { _id: user._id },
-    { preferences: search },
+    { preferences: {city, size, rooms, bathrooms, minPrice, maxPrice, features, neighborhoods},
+    contactForm:{
+      ...search.contactForm
+      }
+   },
     { new: true }
   ).then(updated => {
     console.log("THIS IS THE UPDATED USER DOCUMENT: ", updated);
@@ -205,7 +211,7 @@ router.post("/api/submit", (req, res) => {
 
   const user = req.user;
   const search = req.body.search;
-  // const contactForm = req.body.contactForm;
+  // const contactForm = req.body.search.contactForm;
   savePreferences(user, search);
 
   console.log("USER: ", user, search);
