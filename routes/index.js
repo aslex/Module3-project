@@ -163,8 +163,6 @@ const filterData = listings => {
     }
     return false;
   });
-
-  // console.log("THIS IS THE FILTERED LIST: ", filtered);
   return filtered;
   // filter out flats already contacted
 };
@@ -250,31 +248,12 @@ const getContact = newFlats => {
     });
     console.log("EXPOSE ID HEREEEEEEE ", arrOfId);
     return arrOfId;
-    const messageBody = {
-      "expose.contactForm": {
-        "@xmlns": {
-          common: "http://rest.immobilienscout24.de/schema/common/1.0"
-        },
-        firstname: "firstname",
-        lastname: "lastname",
-        phoneNumber: "phoneNumber",
-        emailAddress: "emailAddress@mail.de",
-        appointmentRequested: "YES",
-        message: "message",
-        address: {
-          "@xsi.type": "common:Address",
-          street: "street",
-          houseNumber: "houseNumber",
-          postcode: "12345",
-          city: "city"
-        },
-        salutation: "FEMALE"
-      }
-    };
+  
   });
 };
 
 const savePreferences = (user, search) => {
+  console.log('save preferences called -user: ', user, ' -search: ', search)
   const {
     city,
     size,
@@ -285,6 +264,8 @@ const savePreferences = (user, search) => {
     features,
     neighborhoods
   } = search;
+const { firstname,  lastname,  phoneNumber,  appointmentRequested,  emailAddress, street, houseNumber, postcode} = search.contactForm;
+
 
   User.updateOne(
     { _id: user._id },
@@ -300,14 +281,39 @@ const savePreferences = (user, search) => {
         neighborhoods
       },
       contactForm: {
-        ...search.contactForm
+        firstname,  lastname,  phoneNumber,  appointmentRequested,  emailAddress,
+        address: {
+          street, houseNumber, postcode
+        }
       }
     },
     { new: true }
   ).then(updated => {
-    console.log("THIS IS THE UPDATED USER DOCUMENT: ", updated);
+    console.log("user document has been updated", updated);
   });
 };
+
+const filterContactedFlats = (onlyImmoScout, allIds) => {
+
+  Flat.find({ _id: { $in: allIds } }).then(alreadyContacted => {
+    // console.log(flats) => array of all the flats
+    console.log("contacted flats: ", alreadyContacted.length);
+const newFlats =
+  onlyImmoScout.filter(flat => {
+      if (alreadyContacted) {
+        for (let i = 0; i < alreadyContacted.length; i++) {
+          const obj = alreadyContacted[i];
+          if (obj.exposeURL == flat.lister_url) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return true;
+    });
+   
+})
+}
 
 router.post("/api/submit", (req, res) => {
   console.log("SEARCH req.body ----------- ", req.body);
@@ -323,32 +329,18 @@ router.post("/api/submit", (req, res) => {
       console.log("only immoscout listings: ", onlyImmoScout.length);
       console.log(user.contactedFlats);
 
-      let allIds = user.contactedFlats;
-      Flat.find({ _id: { $in: allIds } }).then(alreadyContacted => {
-        // console.log(flats) => array of all the flats
-        console.log("contacted flats: ", alreadyContacted.length);
-
-        const newFlats = onlyImmoScout.filter(flat => {
-          if (alreadyContacted) {
-            for (let i = 0; i < contactedFlats.length; i++) {
-              const obj = contactedFlats[i];
-              if (obj.exposeURL == flat.lister_url) {
-                return false;
-              }
-            }
-            return true;
-          }
-          return true;
-        });
+      // filterContactedFlats(onlyImmoScout, user.contactedFlats).then(res => {
+      //   console.log("NEW FLATS ONLY : ", res.length);
+      // })
 
         // newFlats is filtered from the contacted flats
-      });
-
-      // console.log("NEW FLATS ONLY : ", newFlats.length);
+  
 
       getContact(onlyImmoScout).then(arrOfId => {
-        console.log("IS THIS A USER ????????? ", req.user);
-        sendEmail(arrOfId, req.user._id);
+        console.log('emails will now be sent to ', arrOfId.length, ' flats');
+
+        //---------- UNCOMMENT THIS TO ACTUALLY SEND EMAILS TO LISTINGS -----------------
+        // sendEmail(arrOfId, req.user._id);
       });
       return res.json(null);
     })

@@ -54,7 +54,9 @@ class App extends React.Component {
         minPrice: 0,
         maxPrice: 0,
         features: [],
-        neighborhoods: []
+        neighborhoods: [],
+        contactForm: {
+        }
       });
       return;
     }
@@ -72,7 +74,7 @@ class App extends React.Component {
     //   firstname,
     //   lastname,
     //   phoneNumber,
-    //   appointmentRequested = "YES",
+    //   appointmentRequested,
     //   emailAddress
     // } = user.contactForm;
     // const { street, houseNumber, postcode } = user.contactForm.address;
@@ -226,6 +228,7 @@ class App extends React.Component {
               <ContactForm
                 setUser={this.setUser}
                 finalSubmit={this.finalSubmit}
+                updateState={this.updateState}
                 {...props}
               />
             )}
