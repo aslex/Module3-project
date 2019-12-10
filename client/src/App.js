@@ -26,6 +26,7 @@ class App extends React.Component {
     features: [],
     neighborhoods: []
   };
+  
   setUser = user => {
     if (!user) {
       this.setState({
@@ -52,6 +53,7 @@ class App extends React.Component {
       neighborhoods
     } = user.preferences;
     this.setState({
+      // ...this.state,
       user,
       city,
       size,
@@ -144,6 +146,7 @@ class App extends React.Component {
       this.setUser(this.props.user);
     }
   }
+  
 
   render() {
     return (

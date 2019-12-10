@@ -37,9 +37,10 @@ BLUE: #40BFC1 */
 }
 
 .active {
-  background-color: #40BFC1;
+  background-color: #AA2447;
   color: white;
 }
+
 
 .flat img {
   max-height: 50vh;
