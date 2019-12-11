@@ -15,7 +15,7 @@ export default class Home extends Component {
     return (
       <div className="home container-stretch">
         <div className="title">
-          <h1>You've got <span class='notfat'>[a]</span> flat!</h1>
+          <h1>You've got <span className='notfat'>[a]</span> flat!</h1>
         
 
         {this.props.user ? (

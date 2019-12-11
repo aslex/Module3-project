@@ -215,6 +215,11 @@ BLUE: #40BFC1 */
 .all-the-flats{
   display: flex;
   justify-content: center;
- 
-  
+}
+
+/*  ---------------- messages for feedback after clicking 'i found a flat' */
+.message{
+  padding: 4%;
+  color: #FF6F5E;
+  font-weight: bold;
 }

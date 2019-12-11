@@ -6,8 +6,24 @@ class Profile extends Component {
   state = {
     apartments: [],
     toggleUpdate: false,
-    toggleContact: false
+    toggleContact: false,
+    message: ""
     // preferences: {}
+  };
+
+  clearPreferences = event => {
+    // event.preventDefault();
+    axios
+      .delete("/api/clear-preferences")
+      .then(res => {
+        console.log(res);
+        this.setState({
+          message: res.data.message
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   handleClick = event => {
@@ -51,24 +67,21 @@ class Profile extends Component {
     const mappedApts = this.state.apartments.map(el => {
       return (
         <div className="flat col-sm-4" key={el._id}>
-          
-            <img className="" src={el.imageURL} alt="flat" />
-            <div className="info ">
-              <p>Price: {el.price}</p>
-              <p>Size: {el.size}sqm</p>
-              <p>Rooms: {el.rooms}</p>
-              <a href={el.exposeURL} target="_blank">
-                <p>view listing</p>
-              </a>
-            </div>
-          
+          <img className="" src={el.imageURL} alt="flat" />
+          <div className="info ">
+            <p>Price: {el.price}</p>
+            <p>Size: {el.size}sqm</p>
+            <p>Rooms: {el.rooms}</p>
+            <a href={el.exposeURL} target="_blank">
+              <p>view listing</p>
+            </a>
+          </div>
         </div>
       );
     });
 
     return (
-      
-        <div class='container profile-page'>
+      <div className="container profile-page">
         <h3>hi {this.props.user.username}</h3>
 
         <Button
@@ -363,9 +376,14 @@ class Profile extends Component {
               Elevator
             </button>
             <br />
-            <Button onClick={this.toggleUpdate} variant="primary" type="submit">
+            <Button variant="primary" type="submit">
               Save Changes
             </Button>
+            {this.props.message ? (
+              <p className="message">{this.props.message}</p>
+            ) : (
+              <p></p>
+            )}
           </Form>
         )}
 
@@ -467,21 +485,28 @@ class Profile extends Component {
               </Form.Group>
             </Form.Row>
 
-            <Button
-              onClick={this.toggleContact}
-              variant="primary"
-              type="submit"
-            >
+            <Button variant="primary" type="submit">
               Save Changes
             </Button>
+            {this.props.message ? (
+              <p className="message">{this.props.message}</p>
+            ) : (
+              <p></p>
+            )}
           </Form>
         )}
         <br></br>
-    
-        <Button className="custom-btn">I've got [a] flat!</Button>
+
+        <Button onClick={this.clearPreferences} className="custom-btn">
+          I've got [a] flat!
+        </Button>
+        {this.state.message ? (
+          <div className="message">{this.state.message}</div>
+        ) : (
+          <br />
+        )}
         <div className="all-the-flats row">{mappedApts}</div>
-        </div>
-     
+      </div>
     );
   }
 }
