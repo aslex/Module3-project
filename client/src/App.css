@@ -44,10 +44,6 @@ BLUE: #40BFC1 */
   color: white;
 }
 
-.flat img {
-  max-height: 50vh;
-}
-
 /*
 .flat {
   padding: 10%;
@@ -163,6 +159,28 @@ BLUE: #40BFC1 */
   padding: 10%;
   text-decoration: none;
 }
+
+/*  ----------- HOME PAGE ------------- */
+@media screen and (max-width: 580px) {
+  .home img {
+    max-height: 50px;
+  }
+}
+.home img {
+  max-width: 15%;
+}
+.title {
+  height: 60vh;
+  /* border: solid black 2px; */
+
+  background-color: #f5f0e3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 10%;
+  text-decoration: none;
+}
 .title .notfat {
   font-size: 0.8em;
 }
@@ -179,6 +197,7 @@ BLUE: #40BFC1 */
   border-radius: 2em;
   margin: 2%;
   margin-top: 5%;
+
   width: 80%;
   height: 3em;
 }
@@ -197,4 +216,54 @@ BLUE: #40BFC1 */
   height: 3em;
   margin-top: 0em;
   margin-bottom: 10%;
+}
+
+/*  --------- PROFILE ------------- */
+@media screen and (max-width: 580px) {
+  .flat img {
+    /* width: 500px; */
+    width: 100%;
+  }
+  .flat {
+    padding: 5%;
+   
+  }
+}
+.profile-page h3{
+  text-align: left;
+  padding: 3%;
+}
+.flat img {
+  max-width: 50%;
+}
+.flat {
+  /* background-color: rgba(255, 111, 94, .7); */
+  height: 35vh;
+  /* min-width: 40%;
+  max-width: 90%; */
+  padding: 1em;
+  margin: 2%;
+  /* border: solid rgba(255, 111, 94, 0.7) 0.5px; */
+  border: solid #40BFC1 .8px;
+  /* box-shadow: -6px 8px 5px 0px rgba(23, 162, 184, .5); */
+  border-radius: 2em;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.flat p {
+  text-align: left;
+  line-height: 1em;
+}
+.all-the-flats{
+  display: flex;
+  justify-content: center;
+}
+
+/*  ---------------- messages for feedback after clicking 'i found a flat' */
+.message{
+  padding: 4%;
+  color: #FF6F5E;
+  font-weight: bold;
 }

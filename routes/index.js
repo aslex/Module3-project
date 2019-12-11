@@ -417,6 +417,36 @@ router.put("/profile/update-preferences", (req, res) => {
   });
 });
 
+router.delete("/api/clear-preferences", (req, res, next) => {
+  console.log(req.user);
+  User.updateOne(
+    { _id: req.user._id },
+    {
+      preferences: {
+        city: "",
+        size: 10,
+        rooms: 1,
+        bathrooms: 1,
+        minPrice: 0,
+        maxPrice: 0,
+        features: [],
+        neighborhoods: []
+      },
+      contactForm: {},
+      contactedFlats: []
+    }
+  )
+    .then(user => {
+      res.json({
+        message:
+          "Congratulations on finding a flat! Your search is no longer active."
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 module.exports = {
   router,
   getFlats,

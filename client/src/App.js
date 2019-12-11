@@ -41,7 +41,8 @@ class App extends React.Component {
         postcode: "",
         city: ""
       }
-    }
+    },
+    formMessage: ''
   };
 
   setUser = user => {
@@ -157,6 +158,9 @@ class App extends React.Component {
       .put("/profile/update-preferences", { settings: this.state })
       .then(res => {
         console.log("front end response from updating preferences", res.data);
+        this.setState({
+          formMessage: res.data.message
+        })
       });
   };
   finalSubmit = () => {
@@ -284,6 +288,7 @@ class App extends React.Component {
                   user={this.props.user}
                   updateButtonState={this.updateButtonState}
                   updateUserPreferences={this.updateUserPreferences}
+                  message={this.state.formMessage}
                   {...props}
                   {...this.state}
                 />

@@ -10,22 +10,19 @@ const { getContact } = require("../routes/index");
 const { sendEmail } = require("../routes/index");
 
 const getDate = () => {
-
-  console.log("TODAY", Date.now())
-  let oneMonth = Date.parse('01 Feb 1970 00:00:00 GMT')
-  console.log('one month in milliseconds: ', oneMonth)
-
+  console.log("TODAY", Date.now());
+  let oneMonth = Date.parse("01 Feb 1970 00:00:00 GMT");
+  console.log("one month in milliseconds: ", oneMonth);
 };
 
-
 const timedSearchMasterFunction = () => {
-
-  User.find().then(users => {
-    // console.log(Date.parse(users.updated_at));
-    const recentUsers = users.filter(user => {
-      return (Date.now() - Date.parse(user.updated_at) < 2678400000)
-    })
-    console.log('recent users: ', recentUsers)
+  User.find()
+    .then(users => {
+      // console.log(Date.parse(users.updated_at));
+      const recentUsers = users.filter(user => {
+        return Date.now() - Date.parse(user.updated_at) < 2678400000;
+      });
+      console.log("recent users: ", recentUsers);
 
       recentUsers.forEach(user => {
         if (
@@ -66,15 +63,15 @@ const timedSearchMasterFunction = () => {
     });
 };
 
+// cron.schedule("	0 0 */1 * * *", () => {
+//   console.log("NODECRON ---- hour?", Date.now() );
+// i think this one works
+//   //timedSearchMasterFunction();
+// });
 
-cron.schedule("	0 */1 * * * *", () => {
-  console.log("NODECRON working every minute?", Date.now() );
 
-  // timedSearchMasterFunction();
-});
 
-cron.schedule("	0 0 */1 * * *", () => {
-  console.log("NODECRON ---- hour?", Date.now() );
 
-  //timedSearchMasterFunction();
+cron.schedule("* */1 * * *", () => {
+  console.log("stuff");
 });
