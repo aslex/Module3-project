@@ -1,62 +1,80 @@
 const cron = require("node-cron");
 const express = require("express");
+const router = express.Router();
 const User = require("../models/User");
 const Flat = require("../models/Flat");
-const getFlats = require("../routes/index");
-const saveFlatData = require("../routes/index");
+const { getFlats } = require("../routes/index");
+const { filterContactedFlats } = require("../routes/index");
+const { saveFlatData } = require("../routes/index");
+const { getContact } = require("../routes/index");
+const { sendEmail } = require("../routes/index");
 
+const getDate = () => {
+
+  console.log("TODAY", Date.now())
+  let oneMonth = Date.parse('01 Feb 1970 00:00:00 GMT')
+  console.log('one month in milliseconds: ', oneMonth)
+
+};
 
 
 const timedSearchMasterFunction = () => {
+
   User.find().then(users => {
-    console.log("here ---- +++++++ ------- ", users);
+    // console.log(Date.parse(users.updated_at));
+    const recentUsers = users.filter(user => {
+      return (Date.now() - Date.parse(user.updated_at) < 2678400000)
+    })
+    console.log('recent users: ', recentUsers)
 
-    // const month = new Date().getMonth()+1;
-    // const day = new Date().getDate();
-    // const year = new Date().getFullYear();
-    // console.log(  `${year}-${month}-${day}`)
-    // users.forEach(el =>    console.log(el.updated_at))
-    // users.filter(user => {
-    //   return ( today.getDate() - user.updated_at )
-    // })
-    users.forEach(user => {
-
-        if (!user.preferences.city.toUpperCase() !== 'BERLIN') {
+      recentUsers.forEach(user => {
+        if (
+          user.preferences.city.toUpperCase() !== "BERLIN" ||
+          !user.preferences
+        ) {
           return;
         }
 
+        console.log(user.preferences);
+
         getFlats(user.preferences).then(onlyImmoScout => {
           console.log(onlyImmoScout);
+
           filterContactedFlats(onlyImmoScout, user.contactedFlats).then(
             newFlats => {
               console.log("NEW FLATS ONLY : ", newFlats.length);
+
               saveFlatData(newFlats, user);
 
               getContact(newFlats).then(arrOfId => {
-                console.log("emails will now be sent to ", arrOfId.length, " flats");
-
+                console.log(
+                  "emails will now be sent to ",
+                  arrOfId.length,
+                  " flats"
+                );
                 //---------- UNCOMMENT THIS TO ACTUALLY SEND EMAILS TO LISTINGS -----------------
                 // sendEmail(arrOfId, req.user._id)
-                return res.json(null);
+                return;
               });
             }
           );
         });
-      })
-
-    // saveFlatData();
-  })      .catch(err => {
-    console.log(err);
-  });
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 
-cron.schedule('* * */1  * *', () => {
-    console.log('NODECRON working every hour?');
+cron.schedule("	0 */1 * * * *", () => {
+  console.log("NODECRON working every minute?");
 
-    timedSearchMasterFunction();
+  // timedSearchMasterFunction();
 });
 
-// cron.schedule('1 * * * * *', () => {
-//     console.log('TESTING NODECRON')
-// })
+cron.schedule("	0 0 */1 * * *", () => {
+  console.log("NODECRON ---- hour?");
+
+  //timedSearchMasterFunction();
+});

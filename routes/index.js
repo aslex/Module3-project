@@ -10,7 +10,6 @@ const oauthSignature = require("oauth-signature");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
-
   res.render("index");
 });
 
@@ -350,8 +349,12 @@ router.post("/api/submit", (req, res) => {
           saveFlatData(newFlats, user);
 
           getContact(newFlats).then(arrOfId => {
-            console.log("emails will now be sent to ", arrOfId.length, " flats");
-    
+            console.log(
+              "emails will now be sent to ",
+              arrOfId.length,
+              " flats"
+            );
+
             //---------- UNCOMMENT THIS TO ACTUALLY SEND EMAILS TO LISTINGS -----------------
             // sendEmail(arrOfId, req.user._id)
             return res.json(null);
@@ -360,9 +363,6 @@ router.post("/api/submit", (req, res) => {
       );
 
       // newFlats is filtered from the contacted flats
-
-
-
     })
 
     .catch(err => {
@@ -417,4 +417,11 @@ router.put("/profile/update-preferences", (req, res) => {
   });
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  getFlats,
+  filterContactedFlats,
+  saveFlatData,
+  getContact,
+  sendEmail
+};

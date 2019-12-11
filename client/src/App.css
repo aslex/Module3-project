@@ -69,3 +69,7 @@ BLUE: #40BFC1 */
 .on {
   background-color: salmon;
 }
+.home img {
+  max-width: 15%;
+  
+}
