@@ -2,6 +2,9 @@
 
 body {
   font-family: Montserrat;
+  background-color: #f5f0e3;
+  margin: 0;
+  padding: 0;
 }
 /* colors: 
 PINK: #AA2447
@@ -29,7 +32,7 @@ BLUE: #40BFC1 */
 }
 
 .App-link {
-  color: #09d3ac;
+  color: white;
 }
 
 .hide {
@@ -37,10 +40,9 @@ BLUE: #40BFC1 */
 }
 
 .active {
-  background-color: #AA2447;
+  background-color: #aa2447;
   color: white;
 }
-
 
 .flat img {
   max-height: 50vh;
@@ -66,8 +68,27 @@ BLUE: #40BFC1 */
   letter-spacing: 1px;
 }
 
-.on {
-  background-color: salmon;
+.hide {
+  visibility: hidden;
+}
+
+/* ***************************************** OVERWRITTEN BS RULES  ***************************************** */
+
+.custom-btn {
+  background-color: #ff6f5e;
+  color: white;
+  border: black;
+}
+
+.custom-btn:hover {
+  background-color: #aa2447 !important;
+  color: white;
+  border: black;
+}
+
+.mr-auto a {
+  color: white;
+  margin: 5px;
 }
 .home img {
   max-width: 15%;

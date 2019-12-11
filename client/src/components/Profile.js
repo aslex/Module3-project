@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
+import { Alert, Form, Button, Col } from "react-bootstrap";
 
 class Profile extends Component {
   state = {
-    apartments: []
+    apartments: [],
+    toggleUpdate: false,
+    toggleContact: false
     // preferences: {}
   };
 
@@ -12,6 +15,14 @@ class Profile extends Component {
     console.log(event.target);
     event.target.classList.toggle("active");
     this.props.updateButtonState(event);
+  };
+
+  toggleUpdate = () => {
+    this.setState({ toggleUpdate: !this.state.toggleUpdate });
+  };
+
+  toggleContact = () => {
+    this.setState({ toggleContact: !this.state.toggleContact });
   };
 
   componentDidMount() {
@@ -34,8 +45,9 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.props);
-    // if(!this.state.preferences){return <div></div>}
+    if (!this.props.user) {
+      return <div>You are not logged in!</div>;
+    }
     const mappedApts = this.state.apartments.map(el => {
       return (
         <div className="flat col-4" key={el._id}>
@@ -51,281 +63,419 @@ class Profile extends Component {
         </div>
       );
     });
+
     return (
       <>
-        <h1>Welcome {this.props.user.username}</h1>
+        <h3>Welcome {this.props.user.username}</h3>
         {mappedApts}
-        <h3>Update your preferences:</h3>
-        <form onSubmit={this.props.updateUserPreferences}>
-          <label htmlFor="city">City</label>
-          <input
-            name="city"
-            type="text"
-            onChange={this.props.updateState}
-            value={this.props.city}
-            onChange={this.props.updateState}
-          ></input>
 
-          <label htmlFor="size">Size</label>
-          <input
-            name="size"
-            type="number"
-            onChange={this.props.updateState}
-            value={this.props.size}
-          ></input>
+        <Button
+          className="mb-1"
+          variant="outline-info"
+          onClick={this.toggleUpdate}
+        >
+          Update preferences
+        </Button>
+        <br></br>
+        {this.state.toggleUpdate && (
+          <Form onSubmit={this.props.updateUserPreferences}>
+            <Form.Group as={Col}>
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                onChange={this.props.updateState}
+                name="city"
+                type="text"
+                value={this.props.city}
+                placeholder={this.props.city}
+              />
+            </Form.Group>
 
-          <label htmlFor="rooms">Rooms</label>
-          <input
-            name="rooms"
-            type="number"
-            onChange={this.props.updateState}
-            value={this.props.rooms}
-          ></input>
+            <Form.Row>
+              <Form.Group as={Col} controlId="size">
+                <Form.Label>Size</Form.Label>
+                <Form.Control
+                  name="size"
+                  type="number"
+                  onChange={this.props.updateState}
+                  value={this.props.size}
+                />
+              </Form.Group>
 
-          <label htmlFor="bathrooms">Bathrooms</label>
-          <input
-            name="bathrooms"
-            type="number"
-            onChange={this.props.updateState}
-            value={this.props.bathrooms}
-          ></input>
+              <Form.Group as={Col} controlId="rooms">
+                <Form.Label>Rooms</Form.Label>
+                <Form.Control
+                  name="rooms"
+                  type="number"
+                  onChange={this.props.updateState}
+                  value={this.props.rooms}
+                />
+              </Form.Group>
 
-          <label htmlFor="minPrice">Minimum Price</label>
-          <input
-            name="minPrice"
-            type="number"
-            onChange={this.props.updateState}
-            value={this.props.minPrice}
-          ></input>
-          <label htmlFor="maxPrice">Maximum Price</label>
-          <input
-            name="maxPrice"
-            type="number"
-            onChange={this.props.updateState}
-            value={this.props.maxPrice}
-          ></input>
+              <Form.Group as={Col} controlId="bathrooms">
+                <Form.Label>Bathrooms</Form.Label>
+                <Form.Control
+                  name="bathrooms"
+                  type="number"
+                  onChange={this.props.updateState}
+                  value={this.props.bathrooms}
+                />
+              </Form.Group>
+            </Form.Row>
 
-          <h4>Areas</h4>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("friedrichshain")
-                ? "button active"
-                : "button"
-            }
-            name="friedrichshain"
-          >
-            Friedrichshain
-          </button>
+            <Form.Row>
+              <Form.Group as={Col} controlId="minPrice">
+                <Form.Label>Min Price</Form.Label>
+                <Form.Control
+                  name="minPrice"
+                  type="number"
+                  onChange={this.props.updateState}
+                  value={this.props.minPrice}
+                />
+              </Form.Group>
 
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("kreuzberg")
-                ? "button active"
-                : "button"
-            }
-            name="kreuzberg"
-          >
-            Kreuzberg
-          </button>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("prenzlauer berg")
-                ? "button active"
-                : "button"
-            }
-            name="prenzlauer berg"
-          >
-            Prenzlauer Berg
-          </button>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("mitte")
-                ? "button active"
-                : "button"
-            }
-            name="mitte"
-          >
-            Mitte
-          </button>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("shoeneberg")
-                ? "button active"
-                : "button"
-            }
-            name="shoeneberg"
-          >
-            Schöneberg
-          </button>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("charlottenburg")
-                ? "button active"
-                : "button"
-            }
-            name="charlottenburg"
-          >
-            Charlottenburg
-          </button>
-          <br></br>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("neukoelln")
-                ? "button active"
-                : "button"
-            }
-            name="neukoelln"
-          >
-            Neukölln
-          </button>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("wedding")
-                ? "button active"
-                : "button"
-            }
-            name="wedding"
-          >
-            Wedding
-          </button>
+              <Form.Group as={Col} controlId="maxPrice">
+                <Form.Label>Max Price</Form.Label>
+                <Form.Control
+                  name="maxPrice"
+                  type="number"
+                  onChange={this.props.updateState}
+                  value={this.props.maxPrice}
+                />
+              </Form.Group>
+            </Form.Row>
 
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("lichtenberg")
-                ? "button active"
-                : "button"
-            }
-            name="lichtenberg"
-          >
-            Lichtenberg
-          </button>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("marzahn")
-                ? "button active"
-                : "button"
-            }
-            name="marzahn"
-          >
-            Marzahn
-          </button>
-          <button
-            onClick={this.handleClick}
-            className={
-              this.props.neighborhoods.includes("reinickendorf")
-                ? "button active"
-                : "button"
-            }
-            name="reinickendorf"
-          >
-            Reinickendorf
-          </button>
+            <p>Areas</p>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("friedrichshain")
+                  ? "button active"
+                  : "button"
+              }
+              name="friedrichshain"
+            >
+              Friedrichshain
+            </button>
 
-          <h4>Features</h4>
-          <button
-            className={
-              this.props.features.includes("balcony")
-                ? "features button active"
-                : "features button"
-            }
-            name="balcony"
-            onClick={this.handleClick}
-          >
-            Balcony
-          </button>
-          <button
-            className={
-              this.props.features.includes("parking")
-                ? "features button active"
-                : "features button"
-            }
-            name="parking"
-            onClick={this.handleClick}
-          >
-            Parking Spot
-          </button>
-          <button
-            className={
-              this.props.features.includes("wheelchairfriendly")
-                ? "features button active"
-                : "features button"
-            }
-            name="wheelchairfriendly"
-            onClick={this.handleClick}
-          >
-            Wheelchair accessible
-          </button>
-          <button
-            className={
-              this.props.features.includes("pets")
-                ? "features button active"
-                : "features button"
-            }
-            name="pets"
-            onClick={this.handleClick}
-          >
-            Pets allowed
-          </button>
-          <button
-            className={
-              this.props.features.includes("fitted_kitchen")
-                ? "features button active"
-                : "features button"
-            }
-            name="fitted_kitchen"
-            onClick={this.handleClick}
-          >
-            Fitted kitchen
-          </button>
-          <br></br>
-          <button
-            className={
-              this.props.features.includes("fireplace")
-                ? "features button active"
-                : "features button"
-            }
-            name="fireplace"
-            onClick={this.handleClick}
-          >
-            Fireplace
-          </button>
-          <button
-            className={
-              this.props.features.includes("furnished")
-                ? "features button active"
-                : "features button"
-            }
-            name="furnished"
-            onClick={this.handleClick}
-          >
-            Furnished
-          </button>
-          <button
-            className={
-              this.props.features.includes("elevator")
-                ? "features button active"
-                : "features button"
-            }
-            name="elevator"
-            onClick={this.handleClick}
-          >
-            Elevator
-          </button>
-          <br />
-          <button type="submit" className="button submit">
-            Save Changes
-          </button>
-        </form>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("kreuzberg")
+                  ? "button active"
+                  : "button"
+              }
+              name="kreuzberg"
+            >
+              Kreuzberg
+            </button>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("prenzlauer berg")
+                  ? "button active"
+                  : "button"
+              }
+              name="prenzlauer berg"
+            >
+              Prenzlauer Berg
+            </button>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("mitte")
+                  ? "button active"
+                  : "button"
+              }
+              name="mitte"
+            >
+              Mitte
+            </button>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("shoeneberg")
+                  ? "button active"
+                  : "button"
+              }
+              name="shoeneberg"
+            >
+              Schöneberg
+            </button>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("charlottenburg")
+                  ? "button active"
+                  : "button"
+              }
+              name="charlottenburg"
+            >
+              Charlottenburg
+            </button>
+            <br></br>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("neukoelln")
+                  ? "button active"
+                  : "button"
+              }
+              name="neukoelln"
+            >
+              Neukölln
+            </button>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("wedding")
+                  ? "button active"
+                  : "button"
+              }
+              name="wedding"
+            >
+              Wedding
+            </button>
+
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("lichtenberg")
+                  ? "button active"
+                  : "button"
+              }
+              name="lichtenberg"
+            >
+              Lichtenberg
+            </button>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("marzahn")
+                  ? "button active"
+                  : "button"
+              }
+              name="marzahn"
+            >
+              Marzahn
+            </button>
+            <button
+              onClick={this.handleClick}
+              className={
+                this.props.neighborhoods.includes("reinickendorf")
+                  ? "button active"
+                  : "button"
+              }
+              name="reinickendorf"
+            >
+              Reinickendorf
+            </button>
+
+            <p>Features</p>
+            <button
+              className={
+                this.props.features.includes("balcony")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="balcony"
+              onClick={this.handleClick}
+            >
+              Balcony
+            </button>
+            <button
+              className={
+                this.props.features.includes("parking")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="parking"
+              onClick={this.handleClick}
+            >
+              Parking Spot
+            </button>
+            <button
+              className={
+                this.props.features.includes("wheelchairfriendly")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="wheelchairfriendly"
+              onClick={this.handleClick}
+            >
+              Wheelchair accessible
+            </button>
+            <button
+              className={
+                this.props.features.includes("pets")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="pets"
+              onClick={this.handleClick}
+            >
+              Pets allowed
+            </button>
+            <button
+              className={
+                this.props.features.includes("fitted_kitchen")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="fitted_kitchen"
+              onClick={this.handleClick}
+            >
+              Fitted kitchen
+            </button>
+            <br></br>
+            <button
+              className={
+                this.props.features.includes("fireplace")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="fireplace"
+              onClick={this.handleClick}
+            >
+              Fireplace
+            </button>
+            <button
+              className={
+                this.props.features.includes("furnished")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="furnished"
+              onClick={this.handleClick}
+            >
+              Furnished
+            </button>
+            <button
+              className={
+                this.props.features.includes("elevator")
+                  ? "features button active"
+                  : "features button"
+              }
+              name="elevator"
+              onClick={this.handleClick}
+            >
+              Elevator
+            </button>
+            <br />
+            <Button onClick={this.toggleUpdate} variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Form>
+        )}
+
+        <Button
+          className="mb-1"
+          onClick={this.toggleContact}
+          variant="outline-info"
+        >
+          Edit Contact Form
+        </Button>
+        {this.state.toggleContact && (
+          <Form onSubmit={this.props.updateUserPreferences}>
+            <Form.Row>
+              <Form.Group as={Col}>
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  onChange={this.props.updateState}
+                  name="firstName"
+                  type="text"
+                  placeholder={this.props.firstName}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col}>
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  onChange={this.handleChange}
+                  name="lastName"
+                  type="text"
+                  placeholder="Last Name"
+                />
+              </Form.Group>
+            </Form.Row>
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                name="phoneNumber"
+                type="text"
+                placeholder="Enter phone"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                name="emailAddress"
+                type="email"
+                placeholder="Enter email"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Example textarea</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                name="message"
+                as="textarea"
+                rows="3"
+                placeholder="Hello, I am interested in your apartment..."
+              />
+            </Form.Group>
+
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Street</Form.Label>
+                <Form.Control
+                  name="street"
+                  onChange={this.handleChange}
+                  placeholder="1234 Main St"
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formGridAddress2">
+                <Form.Label>Number</Form.Label>
+                <Form.Control name="houseNumber" placeholder="123" />
+              </Form.Group>
+            </Form.Row>
+
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Zip</Form.Label>
+                <Form.Control
+                  onChange={this.handleChange}
+                  name="postcode"
+                  placeholder="12345"
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  name="city"
+                  placeholder="Berlin"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Form.Row>
+
+            <Button
+              onClick={this.toggleContact}
+              variant="primary"
+              type="submit"
+            >
+              Save Changes
+            </Button>
+          </Form>
+        )}
+        <br></br>
+        <Button className="custom-btn">I've got [a] flat!</Button>
       </>
     );
   }

@@ -11,6 +11,8 @@ const Navigation = props => {
     props.clearUser(null);
   };
 
+  console.log(props.user);
+
   return (
     <>
       {props.user ? (
@@ -38,7 +40,7 @@ const Navigation = props => {
         </Navbar>
       ) : (
         <Navbar bg="info" expand="lg">
-          <Navbar.Brand href="#home">
+          <Navbar.Brand>
             <img
               src="./images/logo.png"
               width="50"
