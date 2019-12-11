@@ -79,3 +79,14 @@ BLUE: #40BFC1 */
   color: white;
   border: black;
 }
+
+.custom-btn:hover {
+  background-color: #aa2447 !important;
+  color: white;
+  border: black;
+}
+
+.mr-auto a {
+  color: white;
+  margin: 5px;
+}
