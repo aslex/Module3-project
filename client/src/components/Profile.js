@@ -50,24 +50,26 @@ class Profile extends Component {
     }
     const mappedApts = this.state.apartments.map(el => {
       return (
-        <div className="flat col-4" key={el._id}>
-          <img className="row-2" src={el.imageURL} alt="flat" />
-          <div className="info row-4">
-            <p>Price: {el.price}</p>
-            <p>Size: {el.size}sqm</p>
-            <p>Rooms: {el.rooms}</p>
-            <a href={el.exposeURL} target="_blank">
-              <p>view listing</p>
-            </a>
-          </div>
+        <div className="flat col-sm-4" key={el._id}>
+          
+            <img className="" src={el.imageURL} alt="flat" />
+            <div className="info ">
+              <p>Price: {el.price}</p>
+              <p>Size: {el.size}sqm</p>
+              <p>Rooms: {el.rooms}</p>
+              <a href={el.exposeURL} target="_blank">
+                <p>view listing</p>
+              </a>
+            </div>
+          
         </div>
       );
     });
 
     return (
-      <>
-        <h3>Welcome {this.props.user.username}</h3>
-        {mappedApts}
+      
+        <div class='container profile-page'>
+        <h3>hi {this.props.user.username}</h3>
 
         <Button
           className="mb-1"
@@ -475,8 +477,11 @@ class Profile extends Component {
           </Form>
         )}
         <br></br>
+    
         <Button className="custom-btn">I've got [a] flat!</Button>
-      </>
+        <div className="all-the-flats row">{mappedApts}</div>
+        </div>
+     
     );
   }
 }

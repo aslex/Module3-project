@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-
 body {
   font-family: Montserrat;
 
@@ -45,10 +44,6 @@ BLUE: #40BFC1 */
   color: white;
 }
 
-.flat img {
-  max-height: 50vh;
-}
-
 /*
 .flat {
   padding: 10%;
@@ -91,15 +86,6 @@ BLUE: #40BFC1 */
   color: white;
   margin: 5px;
 }
-@media screen and (max-width: 580px) {
-  .home img {
-      max-height: 50px;
-  }
-}
-.home img {
-<<<<<<< HEAD
-  max-width: 15%;
-}
 
 /* ***************************************** ABOUT  ***************************************** */
 .imgWrapper {
@@ -129,59 +115,106 @@ BLUE: #40BFC1 */
   padding: 10px;
   opacity: 70%;
 }
-=======
-  /* height: 50px; */
-  max-width: 30%;
+
+/*  ----------- HOME PAGE ------------- */
+@media screen and (max-width: 580px) {
+  .home img {
+    max-height: 50px;
+  }
 }
-
-
+.home img {
+  max-width: 15%;
+}
 .title {
-height: 60vh;
-/* border: solid black 2px; */
+  height: 60vh;
+  /* border: solid black 2px; */
 
-background-color: #f5f0e3;
-display: flex;
-flex-direction: column;
-justify-content: center;
+  background-color: #f5f0e3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-padding: 10%;
-text-decoration: none;
+  padding: 10%;
+  text-decoration: none;
 }
-.title .notfat{
-  font-size: .8em;
+.title .notfat {
+  font-size: 0.8em;
 }
-.title h1{
+.title h1 {
   font-size: 3em;
 }
 .title a {
-  color: #AA2447;
+  color: #aa2447;
 }
 .home button {
-background-color: rgba(10, 10, 10, 0);
-/* width: 150px; */
-padding: 4px;
-border-radius: 2em;
-margin: 2%;
-margin-top: 5%;
+  background-color: rgba(10, 10, 10, 0);
+  /* width: 150px; */
+  padding: 4px;
+  border-radius: 2em;
+  margin: 2%;
+  margin-top: 5%;
 
-
-width: 80%;
-height: 3em;
+  width: 80%;
+  height: 3em;
 }
-.info-box{
- padding: 5%;
+.info-box {
+  padding: 5%;
 }
 
-.section-3{
+.section-3 {
   /* border: solid black 3px; */
-  background-color: #FF6F5E;
+  background-color: #ff6f5e;
   padding: 5%;
   color: white;
 }
-.col-12 button{
-width: 60%;
-height: 3em;
-margin-top: 0em;
-margin-bottom: 10%;
+.col-12 button {
+  width: 60%;
+  height: 3em;
+  margin-top: 0em;
+  margin-bottom: 10%;
 }
->>>>>>> 55407956566bd9afadd10aa62e8dd5ecaecf9de5
+
+/*  --------- PROFILE ------------- */
+@media screen and (max-width: 580px) {
+  .flat img {
+    /* width: 500px; */
+    width: 100%;
+  }
+  .flat {
+    padding: 5%;
+   
+  }
+}
+.profile-page h3{
+  text-align: left;
+  padding: 3%;
+}
+.flat img {
+  max-width: 50%;
+}
+.flat {
+  /* background-color: rgba(255, 111, 94, .7); */
+  height: 35vh;
+  /* min-width: 40%;
+  max-width: 90%; */
+  padding: 1em;
+  margin: 2%;
+  /* border: solid rgba(255, 111, 94, 0.7) 0.5px; */
+  border: solid #40BFC1 .8px;
+  /* box-shadow: -6px 8px 5px 0px rgba(23, 162, 184, .5); */
+  border-radius: 2em;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.flat p {
+  text-align: left;
+  line-height: 1em;
+}
+.all-the-flats{
+  display: flex;
+  justify-content: center;
+ 
+  
+}

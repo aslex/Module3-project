@@ -67,14 +67,10 @@ const timedSearchMasterFunction = () => {
 };
 
 
-cron.schedule("	0 */1 * * * *", () => {
-  console.log("NODECRON working every minute?", Date.now() );
 
-  // timedSearchMasterFunction();
-});
 
-cron.schedule("	0 0 */1 * * *", () => {
-  console.log("NODECRON ---- hour?", Date.now() );
+// cron.schedule("	0 0 */1 * * *", () => {
+//   console.log("NODECRON ---- hour?", Date.now() );
 
-  //timedSearchMasterFunction();
-});
+//   //timedSearchMasterFunction();
+// });
