@@ -18,13 +18,13 @@ const Navigation = props => {
       {props.user ? (
         <Navbar bg="info" expand="lg">
           <Navbar.Brand>
-            <img
+            <a href="/"><img
               src="./images/logo.png"
               width="50"
               height="50"
               className="d-inline-block align-top"
               alt="logo"
-            ></img>
+            ></img></a>
           </Navbar.Brand>
           <Navbar.Brand>You've got [a] flat!</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -41,13 +41,13 @@ const Navigation = props => {
       ) : (
         <Navbar bg="info" expand="lg">
           <Navbar.Brand>
-            <img
+            <a href="/"><img
               src="./images/logo.png"
               width="50"
               height="50"
               className="d-inline-block align-top"
               alt="logo"
-            ></img>
+            ></img></a>
           </Navbar.Brand>
           <Navbar.Brand>You've got [a] flat!</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

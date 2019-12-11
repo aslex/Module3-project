@@ -92,5 +92,33 @@ BLUE: #40BFC1 */
 }
 .home img {
   max-width: 15%;
-  
+}
+
+/* ***************************************** ABOUT  ***************************************** */
+.imgWrapper {
+  position: relative;
+  height: 80vh;
+  width: 100vw;
+}
+.about-img {
+  width: 100%;
+  height: 98%;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 2%;
+}
+
+.overlay {
+  position: absolute;
+  overflow: scroll;
+  top: 25%;
+  left: 10%;
+  width: 80%;
+  max-height: 60%;
+  border-radius: 3px;
+  color: white;
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  opacity: 70%;
 }

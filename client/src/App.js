@@ -14,6 +14,7 @@ import Login from "./components/Login";
 import FinalSubmit from "./components/FinalSubmit";
 import Navigation from "./components/Navigation";
 import ContactForm from "./components/ContactForm";
+import About from "./components/About";
 
 class App extends React.Component {
   state = {
@@ -55,8 +56,7 @@ class App extends React.Component {
         maxPrice: 0,
         features: [],
         neighborhoods: [],
-        contactForm: {
-        }
+        contactForm: {}
       });
       return;
     }
@@ -296,6 +296,7 @@ class App extends React.Component {
                 <FinalSubmit setUser={this.setUser} {...props} />
               )}
             />
+            <Route exat path="/about" render={props => <About {...props} />} />
           </>
         </Switch>
       </div>
