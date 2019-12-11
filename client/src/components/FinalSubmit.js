@@ -1,4 +1,5 @@
 import React from "react";
+import { Alert, Form, Button, Col } from "react-bootstrap";
 
 export default class FinalSubmit extends React.Component {
   handleSubmit = e => {
@@ -9,14 +10,19 @@ export default class FinalSubmit extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Thanks for filling out the form!</h2>
+      <div className="form-bg">
+        <h3>
+          Thanks for filling<br></br>out the form!
+        </h3>
         <p>
-          You can now lean back and wait for Mails or manage your your
+          You can now lean back and wait for Mails or manage your
           preferences in your profile!
         </p>
+        <img className="final-img" src="/images/apartment-2.jpg" alt=""></img>
         <form onSubmit={this.handleSubmit}>
-          <button type="submit">Profile</button>
+          <a href="/">
+            <Button type="submit">Profile</Button>
+          </a>
         </form>
       </div>
     );

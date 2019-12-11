@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-
 body {
   font-family: Montserrat;
 
@@ -93,11 +92,10 @@ BLUE: #40BFC1 */
 }
 @media screen and (max-width: 580px) {
   .home img {
-      max-height: 50px;
+    max-height: 50px;
   }
 }
 .home img {
-<<<<<<< HEAD
   max-width: 15%;
 }
 
@@ -107,6 +105,7 @@ BLUE: #40BFC1 */
   height: 80vh;
   width: 100vw;
 }
+
 .about-img {
   width: 100%;
   height: 98%;
@@ -125,63 +124,77 @@ BLUE: #40BFC1 */
   border-radius: 3px;
   color: white;
   background: rgb(0, 0, 0); /* fallback color */
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
   padding: 10px;
   opacity: 70%;
 }
-=======
-  /* height: 50px; */
-  max-width: 30%;
+
+/* ***************************************** FORMS  ***************************************** */
+
+.form-bg {
+  height: 100vh;
+  background-color: #f5f0e3;
 }
 
+/* .btn-container {
+  display: flex;
+  width: 20%;
+} */
+
+.features-button {
+  margin: 0.5%;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+}
+
+/* ***************************************** FINAL SUBMIT ***************************************** */
+
+.final-img {
+  max-width: 100%;
+}
 
 .title {
-height: 60vh;
-/* border: solid black 2px; */
-
-background-color: #f5f0e3;
-display: flex;
-flex-direction: column;
-justify-content: center;
-
-padding: 10%;
-text-decoration: none;
+  height: 60vh;
+  /* border: solid black 2px; */
+  background-color: #f5f0e3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10%;
+  text-decoration: none;
 }
-.title .notfat{
-  font-size: .8em;
+.title .notfat {
+  font-size: 0.8em;
 }
-.title h1{
+.title h1 {
   font-size: 3em;
 }
 .title a {
-  color: #AA2447;
+  color: #aa2447;
 }
 .home button {
-background-color: rgba(10, 10, 10, 0);
-/* width: 150px; */
-padding: 4px;
-border-radius: 2em;
-margin: 2%;
-margin-top: 5%;
-
-
-width: 80%;
-height: 3em;
+  background-color: rgba(10, 10, 10, 0);
+  /* width: 150px; */
+  padding: 4px;
+  border-radius: 2em;
+  margin: 2%;
+  margin-top: 5%;
+  width: 80%;
+  height: 3em;
 }
-.info-box{
- padding: 5%;
+.info-box {
+  padding: 5%;
 }
 
-.section-3{
+.section-3 {
   /* border: solid black 3px; */
-  background-color: #FF6F5E;
+  background-color: #ff6f5e;
   padding: 5%;
   color: white;
 }
-.col-12 button{
-width: 60%;
-height: 3em;
-margin-top: 0em;
-margin-bottom: 10%;
+.col-12 button {
+  width: 60%;
+  height: 3em;
+  margin-top: 0em;
+  margin-bottom: 10%;
 }
->>>>>>> 55407956566bd9afadd10aa62e8dd5ecaecf9de5

@@ -26,7 +26,7 @@ export default class FormCity extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="form-bg">
         <Form onSubmit={this.handleSubmit}>
           <h3>FORM 1</h3>
           <Form.Group as={Col}>
@@ -34,14 +34,16 @@ export default class FormCity extends React.Component {
             <Form.Control
               onChange={this.handleChange}
               type="text"
+              value="Berlin"
               name="city"
               id="city"
               required
             />
           </Form.Group>
-          <button type="submit">Next</button>
+          <Button className="mb-1" variant="info" type="submit">
+            Next
+          </Button>
         </Form>
-
         <ul id="progressbar">
           <li className="hide">
             <img src="./images/logo.png" alt="" width="30px"></img>

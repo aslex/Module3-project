@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert, Form, Button, Col } from "react-bootstrap";
 
 export default class FormArea extends Component {
   loadMore = e => {
@@ -38,85 +39,108 @@ export default class FormArea extends Component {
 
   render() {
     return (
-      <div>
+      <div className="form-bg">
         <form onSubmit={this.handleSubmit}>
           <h1>Neighborhoods:</h1>
 
           <button
             onClick={this.handleClick}
-            className="button"
+            className="features-button"
             name="friedrichshain"
           >
             Friedrichshain
           </button>
           <button
             onClick={this.handleClick}
-            className="button"
+            className="features-button"
             name="kreuzberg"
           >
             Kreuzberg
           </button>
           <button
             onClick={this.handleClick}
-            className="button"
+            className="features-button"
             name="prenzlauer berg"
           >
             Prenzlauer Berg
           </button>
-          <button onClick={this.handleClick} className="button" name="mitte">
+          <button
+            onClick={this.handleClick}
+            className="features-button"
+            name="mitte"
+          >
             Mitte
           </button>
           <button
             onClick={this.handleClick}
-            className="button"
+            className="features-button"
             name="shoeneberg"
           >
             Schöneberg
           </button>
           <button
             onClick={this.handleClick}
-            className="button"
+            className="features-button"
             name="charlottenburg"
           >
             Charlottenburg
           </button>
           <button
             onClick={this.handleClick}
-            className="button"
+            className="features-button"
             name="neukoelln"
           >
             Neukölln
           </button>
-          <button onClick={this.handleClick} className="button" name="wedding">
+          <button
+            onClick={this.handleClick}
+            className="features-button"
+            name="wedding"
+          >
             Wedding
           </button>
           <br />
-          <button onClick={this.loadMore} className="button" name="loadMore">
+          <Button
+            onClick={this.loadMore}
+            className="mb-1"
+            variant="outline-info"
+            name="loadMore"
+          >
             ...
-          </button>
+          </Button>
+          <br></br>
           <button
             onClick={this.handleClick}
-            className="extra button hide"
+            className="extra button hide features-button"
             name="lichtenberg"
           >
             Lichtenberg
           </button>
           <button
             onClick={this.handleClick}
-            className="extra button hide"
+            className="extra button hide features-button"
             name="marzahn"
           >
             Marzahn
           </button>
           <button
             onClick={this.handleClick}
-            className="extra button hide"
+            className="extra button hide features-button"
             name="reinickendorf"
           >
             Reinickendorf
           </button>
-          <button type="submit">Next</button>
-          <button onClick={this.props.history.goBack}>Back</button>
+          <Button className="mb-1" variant="info" type="submit">
+            Next
+          </Button>
+          <br></br>
+          <Button
+            className="mb-1"
+            variant="outline-info"
+            onClick={this.props.history.goBack}
+          >
+            Back
+          </Button>
         </form>
         <ul id="progressbar">
           <li>
