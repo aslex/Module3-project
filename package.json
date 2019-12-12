@@ -34,6 +34,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "react-bootstrap": "^1.0.0-beta.16",
+    "react-progressbar": "^15.4.1",
     "request-promise": "^4.2.5",
     "serve-favicon": "^2.5.0"
   },

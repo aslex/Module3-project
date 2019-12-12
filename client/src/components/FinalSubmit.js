@@ -15,13 +15,15 @@ export default class FinalSubmit extends React.Component {
           Thanks for filling<br></br>out the form!
         </h3>
         <p>
-          You can now lean back and wait for Mails or manage your
-          preferences in your profile!
+          You can now lean back and wait for Mails or manage your preferences in
+          your profile!
         </p>
         <img className="final-img" src="/images/apartment-2.jpg" alt=""></img>
         <form onSubmit={this.handleSubmit}>
           <a href="/">
-            <Button className="profile-btn" type="submit">Profile</Button>
+            <Button className="profile-btn" type="submit">
+              Profile
+            </Button>
           </a>
         </form>
       </div>

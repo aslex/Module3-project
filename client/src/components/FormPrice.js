@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Form, Button, Col } from "react-bootstrap";
+import { Alert, Form, Button, Col, ProgressBar } from "react-bootstrap";
 
 export default class FormPrice extends Component {
   handleChange = event => {
@@ -61,6 +61,7 @@ export default class FormPrice extends Component {
             Back
           </Button>
         </Form>
+        <ProgressBar now={60} variant="info" className="mt-3" />
       </div>
     );
   }

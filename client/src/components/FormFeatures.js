@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Form, Button, Col } from "react-bootstrap";
+import { Alert, Form, Button, Col, ProgressBar } from "react-bootstrap";
 
 export default class FormFeatures extends Component {
   handleSubmit = e => {
@@ -111,6 +111,7 @@ export default class FormFeatures extends Component {
             Back
           </Button>
         </form>
+        <ProgressBar now={80} variant="info" className="mt-3" />
       </div>
     );
   }
