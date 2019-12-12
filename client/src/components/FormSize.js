@@ -74,24 +74,6 @@ export default class FormSize extends Component {
             Back
           </Button>
         </Form>
-
-        <ul id="progressbar">
-          <li className="hide">
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li className="hide">
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li className="hide">
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-        </ul>
       </div>
     );
   }

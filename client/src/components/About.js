@@ -3,7 +3,7 @@ import { Alert, Form, Button } from "react-bootstrap";
 
 export default function About(props) {
   return (
-    <div>
+    <div className="form-bg">
       <h2>About</h2>
       <div className="imgWrapper">
         <img className="about-img" src="./images/apartment-5.jpg" alt=""></img>

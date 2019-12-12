@@ -51,7 +51,8 @@ export default class FormPrice extends Component {
           </Form.Row>
           <Button className="mb-1" variant="info" type="submit">
             Next
-          </Button><br></br>
+          </Button>
+          <br></br>
           <Button
             className="mb-1"
             variant="outline-info"
@@ -60,24 +61,6 @@ export default class FormPrice extends Component {
             Back
           </Button>
         </Form>
-
-        <ul id="progressbar">
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li className="hide">
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li className="hide">
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-        </ul>
       </div>
     );
   }

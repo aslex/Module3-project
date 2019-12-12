@@ -111,23 +111,6 @@ export default class FormFeatures extends Component {
             Back
           </Button>
         </form>
-        <ul id="progressbar">
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li>
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-          <li className="hide">
-            <img src="./images/logo.png" alt="" width="30px"></img>
-          </li>
-        </ul>
       </div>
     );
   }

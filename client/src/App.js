@@ -1,5 +1,7 @@
 import React from "react";
-import { Route, Link, Switch, MemoryRouter } from "react-router-dom";
+import { Route, Link, Switch, withRouter } from "react-router-dom";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
 import "./App.css";
 import axios from "axios";
 import FormArea from "./components/FormArea";
@@ -42,7 +44,7 @@ class App extends React.Component {
         city: ""
       }
     },
-    formMessage: ''
+    formMessage: ""
   };
 
   setUser = user => {
@@ -160,7 +162,7 @@ class App extends React.Component {
         console.log("front end response from updating preferences", res.data);
         this.setState({
           formMessage: res.data.message
-        })
+        });
       });
   };
   finalSubmit = () => {
@@ -182,130 +184,136 @@ class App extends React.Component {
 
   render() {
     return (
-      // <MemoryRouter>
       <div className="App">
-        <Switch>
-          <Route
-            exact
-            path="/form1"
-            render={props => (
-              <FormCity
-                updateState={this.updateState}
-                user={this.state.user}
-                info={this.state}
-                {...props}
+            <Switch>
+            
+              <Route
+                exact
+                path="/form1"
+                render={props => (
+                  <FormCity
+                    updateState={this.updateState}
+                    user={this.state.user}
+                    info={this.state}
+                    {...props}
+                  />
+                )}
               />
-            )}
-          />
 
-          <Route
-            exact
-            path="/form2"
-            render={props => (
-              <FormSize
-                updateState={this.updateState}
-                user={this.state.user}
-                info={this.state}
-                {...props}
+              <Route
+                exact
+                path="/form2"
+                render={props => (
+                  <FormSize
+                    updateState={this.updateState}
+                    user={this.state.user}
+                    info={this.state}
+                    {...props}
+                  />
+                )}
               />
-            )}
-          />
 
-          <Route
-            exact
-            path="/form3"
-            render={props => (
-              <FormPrice
-                updateState={this.updateState}
-                user={this.state.user}
-                {...props}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/form4"
-            render={props => (
-              <FormFeatures
-                updateState={this.updateButtonState}
-                user={this.state.user}
-                {...props}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/form5"
-            render={props => (
-              <FormArea
-                updateState={this.updateButtonState}
-                setUser={this.setUser}
-                user={this.state.user}
-                {...props}
-              />
-            )}
-          />
+              
 
-          <Route
-            exact
-            path="/form6"
-            render={props => (
-              <ContactForm
-                setUser={this.setUser}
-                finalSubmit={this.finalSubmit}
-                user={this.state.user}
-                updateState={this.updateState}
-                {...props}
+              <Route
+                exact
+                path="/form3"
+                render={props => (
+                  <FormPrice
+                    updateState={this.updateState}
+                    user={this.state.user}
+                    {...props}
+                  />
+                )}
               />
-            )}
-          />
+              <Route
+                exact
+                path="/form4"
+                render={props => (
+                  <FormFeatures
+                    updateState={this.updateButtonState}
+                    user={this.state.user}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/form5"
+                render={props => (
+                  <FormArea
+                    updateState={this.updateButtonState}
+                    setUser={this.setUser}
+                    user={this.state.user}
+                    {...props}
+                  />
+                )}
+              />
 
-          <>
-            <Navigation user={this.state.user} clearUser={this.setUser} />
+              <Route
+                exact
+                path="/form6"
+                render={props => (
+                  <ContactForm
+                    setUser={this.setUser}
+                    finalSubmit={this.finalSubmit}
+                    user={this.state.user}
+                    updateState={this.updateState}
+                    {...props}
+                  />
+                )}
+              />
+           
+              <>
+                <Navigation user={this.state.user} clearUser={this.setUser} />
 
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Home user={this.state.user} clearUser={this.setUser} />
-              )}
-            />
-            <Route
-              path="/auth/signup"
-              render={props => <Signup setUser={this.setUser} {...props} />}
-            />
-            <Route
-              path="/auth/login"
-              render={props => <Login setUser={this.setUser} {...props} />}
-            />
-            <Route
-              exact
-              path="/profile"
-              render={props => (
-                <Profile
-                  finalSubmit={this.finalSubmit}
-                  updateState={this.updateState}
-                  user={this.props.user}
-                  updateButtonState={this.updateButtonState}
-                  updateUserPreferences={this.updateUserPreferences}
-                  message={this.state.formMessage}
-                  {...props}
-                  {...this.state}
+                <Route
+                  exact
+                  path="/"
+                  render={() => (
+                    <Home user={this.state.user} clearUser={this.setUser} />
+                  )}
                 />
-              )}
-            />
-            <Route
-              exact
-              path="/finalSubmit"
-              render={props => (
-                <FinalSubmit setUser={this.setUser} {...props} />
-              )}
-            />
-            <Route exat path="/about" render={props => <About {...props} />} />
-          </>
-        </Switch>
+                <Route
+                  path="/auth/signup"
+                  render={props => <Signup setUser={this.setUser} {...props} />}
+                />
+                <Route
+                  path="/auth/login"
+                  render={props => <Login setUser={this.setUser} {...props} />}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  render={props => (
+                    <Profile
+                      finalSubmit={this.finalSubmit}
+                      updateState={this.updateState}
+                      user={this.props.user}
+                      updateButtonState={this.updateButtonState}
+                      updateUserPreferences={this.updateUserPreferences}
+                      message={this.state.formMessage}
+                      {...props}
+                      {...this.state}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/finalSubmit"
+                  render={props => (
+                    <FinalSubmit setUser={this.setUser} {...props} />
+                  )}
+                />
+                <Route
+                  exat
+                  path="/about"
+                  render={props => <About {...props} />}
+                />
+              </>
+            </Switch>
+
       </div>
-      // </MemoryRouter> */}
     );
   }
 }
