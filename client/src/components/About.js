@@ -7,7 +7,7 @@ export default class About extends React.Component {
   render() {
     return (
       <div className="form-bg">
-        <h2>About</h2>
+        <h2 className="m-4">About</h2>
         <div className="imgWrapper">
           <img className="about-img" src={bckgrndimage} alt=""></img>
 
