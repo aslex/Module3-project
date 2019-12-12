@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Form, Button, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { Alert, Form, Button, Col, ProgressBar } from "react-bootstrap";
 
 export default class FormSize extends Component {
   handleChange = event => {
@@ -74,6 +72,7 @@ export default class FormSize extends Component {
             Back
           </Button>
         </Form>
+        <ProgressBar now={40} variant="info" className="mt-3" />
       </div>
     );
   }

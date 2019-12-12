@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Form, Button, Col } from "react-bootstrap";
+import { Alert, Form, Button, Col, ProgressBar } from "react-bootstrap";
 
 export default class FormArea extends Component {
   loadMore = e => {
@@ -142,6 +142,7 @@ export default class FormArea extends Component {
             Back
           </Button>
         </form>
+        <ProgressBar now={100} variant="info" className="mt-3" />
       </div>
     );
   }

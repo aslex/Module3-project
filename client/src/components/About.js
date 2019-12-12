@@ -16,7 +16,10 @@ export default function About(props) {
           <br></br> It was built as a final project for the Web Development
           Bootcamp at Ironhack Berlin by Alexandra Servie and Laura Ningel.
           <br></br>
-          <br></br>Find us on Github
+          <br></br>
+          <a href="https://github.com/aslex/Module3-project">
+            Find us on Github
+          </a>
         </p>
       </div>
       <a href="/">

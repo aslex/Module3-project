@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { Alert, Form, Button, Col } from "react-bootstrap";
+import { Alert, Form, Button, Col, ProgressBar } from "react-bootstrap";
 
 export default class FormCity extends React.Component {
   handleChange = event => {
@@ -14,12 +14,12 @@ export default class FormCity extends React.Component {
   };
 
   // componentDidMount -> get user Info
-  // IF User has already filled out this form -> check user obkect
+  // IF User has already filled out this form -> check user object
   // redirect to profile
   componentDidMount = () => {
     console.log(this.props);
     const { user } = this.props;
-    if (user.preferences.city && user) {
+    if (user.preferences.city) {
       this.props.history.push("/");
     }
   };
@@ -34,7 +34,6 @@ export default class FormCity extends React.Component {
             <Form.Control
               onChange={this.handleChange}
               type="text"
-              value="Berlin"
               name="city"
               id="city"
               required
@@ -44,6 +43,7 @@ export default class FormCity extends React.Component {
             Next
           </Button>
         </Form>
+        <ProgressBar now={20} variant="info" className="mt-3" />
       </div>
     );
   }
