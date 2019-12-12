@@ -28,7 +28,7 @@ export default class FormCity extends React.Component {
     return (
       <div className="form-bg">
         <Form onSubmit={this.handleSubmit}>
-          <h3>FORM 1</h3>
+          <h3>Select your city</h3>
           <Form.Group as={Col}>
             <Form.Label>City</Form.Label>
             <Form.Control

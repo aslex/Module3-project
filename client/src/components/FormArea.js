@@ -41,7 +41,7 @@ export default class FormArea extends Component {
     return (
       <div className="form-bg">
         <form onSubmit={this.handleSubmit}>
-          <h1>Neighborhoods:</h1>
+          <h3>Select your preferred neighborhoods:</h3>
 
           <button
             onClick={this.handleClick}

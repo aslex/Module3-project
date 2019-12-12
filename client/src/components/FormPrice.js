@@ -24,7 +24,7 @@ export default class FormPrice extends Component {
     return (
       <div className="form-bg">
         <Form onSubmit={this.handleSubmit}>
-          <h3>FORM 3</h3>
+          <h3>Price:</h3>
 
           <Form.Row>
             <Form.Group as={Col}>

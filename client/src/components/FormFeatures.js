@@ -34,7 +34,7 @@ export default class FormFeatures extends Component {
     return (
       <div className="form-bg">
         <form onSubmit={this.handleSubmit}>
-          <h3>FORM 4</h3>
+          <h3>Select amenities: </h3>
           <p>The apartment should have...</p>
           <div className="btn-container">
             <button

@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 /* colors: 
 PINK: #AA2447
 CORAL: #FF6F5E
@@ -86,11 +87,13 @@ BLUE: #40BFC1 */
   color: white;
   margin: 5px;
 }
+
 @media screen and (max-width: 580px) {
   .home img {
     max-height: 50px;
   }
 }
+
 .home img {
   max-width: 15%;
 }
@@ -119,7 +122,8 @@ BLUE: #40BFC1 */
   max-height: 60%;
   border-radius: 3px;
   color: white;
-  background: rgb(0, 0, 0); /* fallback color */
+  background: rgb(0, 0, 0);
+  /* fallback color */
   background: rgba(0, 0, 0, 0.7);
   padding: 10px;
   opacity: 70%;
@@ -133,12 +137,26 @@ BLUE: #40BFC1 */
   background-color: #f5f0e3;
 }
 
+.form-bg h3 {
+  padding: 6%;
+}
+
+/* .form-bg label, .form-bg input{
+  padding: 1em;
+} */
+
 /* .btn-container {
   display: flex;
   width: 20%;
 } */
 
 .features-button {
+  margin: 0.5%;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.button {
   margin: 0.5%;
   padding: 0.375rem 0.75rem;
   border-radius: 0.25rem;
@@ -175,15 +193,37 @@ BLUE: #40BFC1 */
   height: 3em;
 }
 
+/*  button styling not working after click ----------------------- */
+.btn-primary {
+  background-color: #FF6F5E;
+  border: none;
+  padding: 4px;
+  border-radius: 2em;
+  margin: 2%;
+  margin-top: 5%;
+  width: 80%;
+  height: 3em;
+}
+
+.btn.btn-primary:hover {
+  background-color: white;
+  color: #40BFC1;
+  border: solid #40BFC1 1px;
+}
+
+
+
 /*  ----------- HOME PAGE ------------- */
 @media screen and (max-width: 580px) {
   .home img {
     max-height: 50px;
   }
 }
+
 .home img {
   max-width: 15%;
 }
+
 .title {
   height: 60vh;
   /* border: solid black 2px; */
@@ -196,15 +236,19 @@ BLUE: #40BFC1 */
   padding: 10%;
   text-decoration: none;
 }
+
 .title .notfat {
   font-size: 0.8em;
 }
+
 .title h1 {
   font-size: 3em;
 }
+
 .title a {
   color: #aa2447;
 }
+
 .home button {
   background-color: rgba(10, 10, 10, 0);
   /* width: 150px; */
@@ -215,6 +259,7 @@ BLUE: #40BFC1 */
   width: 80%;
   height: 3em;
 }
+
 .info-box {
   padding: 5%;
 }
@@ -225,6 +270,7 @@ BLUE: #40BFC1 */
   padding: 5%;
   color: white;
 }
+
 .col-12 button {
   width: 60%;
   height: 3em;
@@ -238,17 +284,21 @@ BLUE: #40BFC1 */
     /* width: 500px; */
     width: 100%;
   }
+
   .flat {
     padding: 5%;
   }
 }
+
 .profile-page h3 {
   text-align: left;
   padding: 3%;
 }
+
 .flat img {
   max-width: 50%;
 }
+
 .flat {
   /* background-color: rgba(255, 111, 94, .7); */
   height: 35vh;
@@ -265,10 +315,12 @@ BLUE: #40BFC1 */
   justify-content: space-around;
   align-items: center;
 }
+
 .flat p {
   text-align: left;
   line-height: 1em;
 }
+
 .all-the-flats {
   display: flex;
   justify-content: center;

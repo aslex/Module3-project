@@ -27,7 +27,7 @@ export default class FormSize extends Component {
     return (
       <div className="form-bg">
         <Form onSubmit={this.handleSubmit}>
-          <h3>FORM 2</h3>
+          <h3>Size: </h3>
           <Form.Group as={Col}>
             <Form.Label>Total area in sqm</Form.Label>
             <Form.Control

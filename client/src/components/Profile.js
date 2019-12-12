@@ -376,7 +376,7 @@ class Profile extends Component {
               Elevator
             </button>
             <br />
-            <Button variant="primary" type="submit">
+            <Button variant="primary"  type="submit">
               Save Changes
             </Button>
             {this.props.message ? (
