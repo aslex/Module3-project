@@ -63,15 +63,10 @@ const timedSearchMasterFunction = () => {
     });
 };
 
-// cron.schedule("	0 0 */1 * * *", () => {
-//   console.log("NODECRON ---- hour?", Date.now() );
-// i think this one works
-//   //timedSearchMasterFunction();
-// });
-
-
-
-
-cron.schedule("* */1 * * *", () => {
-  console.log("stuff");
+cron.schedule("0 0 */1 * * *", () => {
+  const hour = new Date().getHours();
+  const min = new Date().getMinutes();
+  console.log("Master function running ", hour, min);
+  timedSearchMasterFunction();
 });
+

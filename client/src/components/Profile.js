@@ -505,6 +505,7 @@ class Profile extends Component {
         ) : (
           <br />
         )}
+        <h4 className="col-sm-7 mt-4">recently contacted flats: </h4>
         <div className="all-the-flats row">{mappedApts}</div>
       </div>
     );
