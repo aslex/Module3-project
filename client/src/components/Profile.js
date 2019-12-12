@@ -376,9 +376,13 @@ class Profile extends Component {
               Elevator
             </button>
             <br />
-            <Button variant="primary"  type="submit">
+            <button
+              className="profile-btn btn-change"
+              variant="primary"
+              type="submit"
+            >
               Save Changes
-            </Button>
+            </button>
             {this.props.message ? (
               <p className="message">{this.props.message}</p>
             ) : (
@@ -485,9 +489,13 @@ class Profile extends Component {
               </Form.Group>
             </Form.Row>
 
-            <Button variant="primary" type="submit">
+            <button
+              className="profile-btn btn-change"
+              variant="primary"
+              type="submit"
+            >
               Save Changes
-            </Button>
+            </button>
             {this.props.message ? (
               <p className="message">{this.props.message}</p>
             ) : (
@@ -496,18 +504,24 @@ class Profile extends Component {
           </Form>
         )}
         <br></br>
-        {this.props.user.preferences.city ?
-        <Button onClick={this.clearPreferences} className="custom-btn">
-          I've got [a] flat!
-        </Button> : <div></div>}
+        {this.props.user.preferences.city ? (
+          <Button onClick={this.clearPreferences} className="custom-btn">
+            I've got [a] flat!
+          </Button>
+        ) : (
+          <div></div>
+        )}
         {this.state.message ? (
           <div className="message">{this.state.message}</div>
         ) : (
           <br />
         )}
-        {this.props.user.preferences.city ?
-        <h4 className="col-sm-7 mt-4">recently contacted flats: </h4> : <></>}
-        <div className="all-the-flats row">{mappedApts}</div> 
+        {this.props.user.preferences.city ? (
+          <h4 className="col-sm-7 mt-4">recently contacted flats: </h4>
+        ) : (
+          <></>
+        )}
+        <div className="all-the-flats row">{mappedApts}</div>
       </div>
     );
   }
