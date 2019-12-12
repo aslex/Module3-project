@@ -22,7 +22,7 @@ export default class FinalSubmit extends React.Component {
         <img className="final-img" src={apartmentPic} alt=""></img>
         <form onSubmit={this.handleSubmit}>
           <a href="/">
-            <Button className="profile-btn" type="submit">
+            <Button className="custom-btn" type="submit">
               Profile
             </Button>
           </a>

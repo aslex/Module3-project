@@ -127,7 +127,6 @@ BLUE: #40BFC1 */
   /* opacity: 70%; */
 }
 
-
 /* ***************************************** FORMS  ***************************************** */
 
 .form-bg {
@@ -147,11 +146,6 @@ body{
   padding: 1em;
 } */
 
-/* .btn-container {
-  display: flex;
-  width: 20%;
-} */
-
 .features-button {
   margin: 0.5%;
   padding: 0.375rem 0.75rem;
@@ -162,7 +156,6 @@ body{
   margin: 0.5%;
   padding: 0.375rem 0.75rem;
   border-radius: 0.25rem;
-
 }
 
 /* ***************************************** FINAL SUBMIT ***************************************** */
@@ -197,7 +190,7 @@ body{
 
 /*  button styling not working after click ----------------------- */
 .btn-primary {
-  background-color: #FF6F5E;
+  background-color: #ff6f5e;
   border: none;
   padding: 4px;
   border-radius: 2em;
@@ -207,13 +200,34 @@ body{
   height: 3em;
 }
 
-.btn.btn-primary:hover {
+.btn-primary:hover {
   background-color: white;
-  color: #40BFC1;
-  border: solid #40BFC1 1px;
+  color: #40bfc1;
+  border: solid #40bfc1 1px;
 }
 
+.btn-change {
+  background-color: #ff6f5e;
+  border: none;
+  padding: 4px;
+  border-radius: 2em;
+  margin: 2%;
+  margin-top: 5%;
+  width: 80%;
+  height: 3em;
+  color: white;
+}
 
+.btn-change:active {
+  background-color:white;
+  border: none;
+  padding: 4px;
+  border-radius: 2em;
+  margin: 2%;
+  margin-top: 5%;
+  width: 80%;
+  height: 3em;
+}
 
 /*  ----------- HOME PAGE ------------- */
 @media screen and (max-width: 580px) {
@@ -336,24 +350,4 @@ body{
   padding: 4%;
   color: #ff6f5e;
   font-weight: bold;
-}
-
-/* ***************************************** TRANSITION EFFECTS ***************************************** */
-
-.fade-enter {
-  opacity: 0.01;
-}
-
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in;
-}
-
-.fade-exit {
-  opacity: 1;
-}
-
-.fade-exit.fade-exit-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
 }

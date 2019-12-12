@@ -9,8 +9,6 @@ Finding a flat in the city is one of the most strenous parts of the Berlin exper
 If there only was a way to simplify this more or less repetitive procedure...
 With You've got flat we created a tool that leads a user through a form where he can store his preferences concerning desired areas, prize and size ranges as well as extras like having an additional bathroom, wheelchair-accessibility or being able to bring the cat. After filling out the form once, the app will immediately scan available data for matches and sent out either a customized or default message to the provider.
 
-Since timing is everything... (tbc)
-
 ### The Project
 
 You've got flat was built as a final project for the Web Development Bootcamp at Ironhack Berlin by Alexandra Servie and Laura Ningel. The timeframe for the project was 8 days.
@@ -18,7 +16,3 @@ You've got flat was built as a final project for the Web Development Bootcamp at
 ### Technologies used
 
 The web app was built using ReactJS, Node.js, Express,js and MongoDB. The retrieved data originates from two API's hosted by Immobilienscout24 and Nestoria.
-
-### Future Improvements
-
-Create a profile page (linked in) where users can store a short bio that can be accessed by the realtors via a provided link. Picture etc ---> more personal (?????)
