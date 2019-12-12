@@ -64,7 +64,7 @@ class Profile extends Component {
     if (!this.props.user) {
       return <div>You are not logged in!</div>;
     }
-    const mappedApts = this.state.apartments.map(el => {
+    const mappedApts = this.state.apartments.reverse().map(el => {
       return (
         <div className="flat col-sm-4" key={el._id}>
           <img className="" src={el.imageURL} alt="flat" />

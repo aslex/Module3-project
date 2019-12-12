@@ -49,9 +49,9 @@ const timedSearchMasterFunction = () => {
                   arrOfId.length,
                   " flats"
                 );
-                //---------- UNCOMMENT THIS TO ACTUALLY SEND EMAILS TO LISTINGS -----------------
-                // sendEmail(arrOfId, req.user._id)
-                return;
+                //---------- ACTUALLY SEND EMAILS TO LISTINGS -----------------
+                 return sendEmail(arrOfId, req.user._id)
+                
               });
             }
           );
