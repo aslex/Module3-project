@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Alert, Form, Button, Col } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 
 export default class FormSize extends Component {
   handleChange = event => {
@@ -23,7 +25,7 @@ export default class FormSize extends Component {
 
   render() {
     return (
-      <div>
+      <div className="form-bg">
         <Form onSubmit={this.handleSubmit}>
           <h3>FORM 2</h3>
           <Form.Group as={Col}>
@@ -60,8 +62,17 @@ export default class FormSize extends Component {
               />
             </Form.Group>
           </Form.Row>
-          <button type="submit">Next</button>
-          <button onClick={this.props.history.goBack}>Back</button>
+          <Button className="mb-1" variant="info" type="submit">
+            Next
+          </Button>
+          <br></br>
+          <Button
+            className="mb-1"
+            variant="outline-info"
+            onClick={this.props.history.goBack}
+          >
+            Back
+          </Button>
         </Form>
 
         <ul id="progressbar">

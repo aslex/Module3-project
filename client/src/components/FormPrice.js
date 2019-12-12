@@ -22,7 +22,7 @@ export default class FormPrice extends Component {
 
   render() {
     return (
-      <div>
+      <div className="form-bg">
         <Form onSubmit={this.handleSubmit}>
           <h3>FORM 3</h3>
 
@@ -49,8 +49,16 @@ export default class FormPrice extends Component {
               />
             </Form.Group>
           </Form.Row>
-          <button type="submit">Next</button>
-          <button onClick={this.props.history.goBack}>Back</button>
+          <Button className="mb-1" variant="info" type="submit">
+            Next
+          </Button><br></br>
+          <Button
+            className="mb-1"
+            variant="outline-info"
+            onClick={this.props.history.goBack}
+          >
+            Back
+          </Button>
         </Form>
 
         <ul id="progressbar">

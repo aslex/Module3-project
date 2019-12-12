@@ -24,7 +24,7 @@ export default class ContactForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="form-bg">
         <h3>Contact Form</h3>
         <Form onSubmit={this.handleSubmit}>
           <Form.Row>
@@ -70,7 +70,7 @@ export default class ContactForm extends Component {
           </Form.Group>
 
           <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Example textarea</Form.Label>
+            <Form.Label>Your message</Form.Label>
             <Form.Control
               onChange={this.handleChange}
               name="message"
@@ -116,7 +116,7 @@ export default class ContactForm extends Component {
             </Form.Group>
           </Form.Row>
 
-          <Button variant="primary" type="submit">
+          <Button className="custom-btn" variant="primary" type="submit">
             Submit
           </Button>
         </Form>
