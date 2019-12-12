@@ -120,7 +120,7 @@ BLUE: #40BFC1 */
   border-radius: 3px;
   color: white;
   background: rgb(0, 0, 0); /* fallback color */
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   padding: 10px;
   opacity: 70%;
 }
@@ -146,7 +146,9 @@ BLUE: #40BFC1 */
 /* ***************************************** FINAL SUBMIT ***************************************** */
 
 .final-img {
+  max-height: 65vh;
   max-width: 100%;
+  margin-bottom: -5px;
 }
 
 .title {
@@ -158,6 +160,18 @@ BLUE: #40BFC1 */
   justify-content: center;
   padding: 10%;
   text-decoration: none;
+}
+
+.profile-btn {
+  background-color: rgba(10, 10, 10, 0);
+  color: black;
+  padding: 4px;
+  border: 1px solid grey;
+  border-radius: 2em;
+  margin: 2%;
+  margin-top: 5%;
+  width: 80%;
+  height: 3em;
 }
 
 /*  ----------- HOME PAGE ------------- */
@@ -197,7 +211,6 @@ BLUE: #40BFC1 */
   border-radius: 2em;
   margin: 2%;
   margin-top: 5%;
-
   width: 80%;
   height: 3em;
 }
@@ -226,10 +239,9 @@ BLUE: #40BFC1 */
   }
   .flat {
     padding: 5%;
-   
   }
 }
-.profile-page h3{
+.profile-page h3 {
   text-align: left;
   padding: 3%;
 }
@@ -244,7 +256,7 @@ BLUE: #40BFC1 */
   padding: 1em;
   margin: 2%;
   /* border: solid rgba(255, 111, 94, 0.7) 0.5px; */
-  border: solid #40BFC1 .8px;
+  border: solid #40bfc1 0.8px;
   /* box-shadow: -6px 8px 5px 0px rgba(23, 162, 184, .5); */
   border-radius: 2em;
 
@@ -256,14 +268,34 @@ BLUE: #40BFC1 */
   text-align: left;
   line-height: 1em;
 }
-.all-the-flats{
+.all-the-flats {
   display: flex;
   justify-content: center;
 }
 
 /*  ---------------- messages for feedback after clicking 'i found a flat' */
-.message{
+.message {
   padding: 4%;
-  color: #FF6F5E;
+  color: #ff6f5e;
   font-weight: bold;
+}
+
+/* ***************************************** TRANSITION EFFECTS ***************************************** */
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }
