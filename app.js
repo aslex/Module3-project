@@ -18,7 +18,9 @@ require("./configs/passport");
 require("./configs/nodecron");
 
 mongoose
-  .connect("mongodb://localhost/module3-project", { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/Module3-project", {
+    useNewUrlParser: true
+  })
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -53,7 +55,7 @@ app.use(
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "/client/build")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
 // ADD SESSION SETTINGS HERE:
@@ -94,5 +96,10 @@ app.use("/", index);
 
 const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
+
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/client/build/index.html");
+});
 
 module.exports = app;

@@ -1,12 +1,13 @@
 import React from "react";
 import { Alert, Form, Button } from "react-bootstrap";
+import bckgrndimage from "../images/apartment-5.jpg";
 
 export default function About(props) {
   return (
     <div className="form-bg">
       <h2>About</h2>
       <div className="imgWrapper">
-        <img className="about-img" src="./images/apartment-5.jpg" alt=""></img>
+        <img className="about-img" src={bckgrndimage} alt=""></img>
 
         <p className="overlay">
           You've got [a] flat is an E-mail service tool for apartment seekers

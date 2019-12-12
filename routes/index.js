@@ -8,10 +8,10 @@ const OAuth = require("oauth-1.0a");
 const request = require("request-promise");
 const oauthSignature = require("oauth-signature");
 
-/* GET home page */
-router.get("/", (req, res, next) => {
-  res.render("index");
-});
+// /* GET home page */
+// router.get("/", (req, res, next) => {
+//   res.render("index");
+// });
 
 // BEGIN POST REQUEST CODE
 

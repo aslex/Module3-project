@@ -64,7 +64,7 @@ class Profile extends Component {
     if (!this.props.user) {
       return <div>You are not logged in!</div>;
     }
-    const mappedApts = this.state.apartments.map(el => {
+    const mappedApts = this.state.apartments.reverse().map(el => {
       return (
         <div className="flat col-sm-4" key={el._id}>
           <img className="" src={el.imageURL} alt="flat" />
@@ -496,17 +496,18 @@ class Profile extends Component {
           </Form>
         )}
         <br></br>
-
+        {this.props.user.preferences.city ?
         <Button onClick={this.clearPreferences} className="custom-btn">
           I've got [a] flat!
-        </Button>
+        </Button> : <div></div>}
         {this.state.message ? (
           <div className="message">{this.state.message}</div>
         ) : (
           <br />
         )}
-        <h4 className="col-sm-7 mt-4">recently contacted flats: </h4>
-        <div className="all-the-flats row">{mappedApts}</div>
+        {this.props.user.preferences.city ?
+        <h4 className="col-sm-7 mt-4">recently contacted flats: </h4> : <></>}
+        <div className="all-the-flats row">{mappedApts}</div> 
       </div>
     );
   }

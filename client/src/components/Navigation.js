@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Navbar } from "react-bootstrap";
 import { logout } from "../services/auth";
+import logo from "../images/logo.png"
 
 const Navigation = props => {
   const handleLogout = () => {
@@ -19,7 +20,7 @@ const Navigation = props => {
         <Navbar bg="info" expand="lg">
           <Navbar.Brand>
             <a href="/"><img
-              src="./images/logo.png"
+              src={logo}
               width="50"
               height="50"
               className="d-inline-block align-top"
@@ -42,7 +43,7 @@ const Navigation = props => {
         <Navbar bg="info" expand="lg">
           <Navbar.Brand>
             <a href="/"><img
-              src="./images/logo.png"
+              src={logo}
               width="50"
               height="50"
               className="d-inline-block align-top"
