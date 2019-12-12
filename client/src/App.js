@@ -308,7 +308,7 @@ class App extends React.Component {
                 <Route
                   exat
                   path="/about"
-                  render={props => <About {...props} />}
+                  render={props => <About user={this.state.user} {...props} />}
                 />
               </>
             </Switch>

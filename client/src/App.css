@@ -122,22 +122,25 @@ BLUE: #40BFC1 */
   max-height: 60%;
   border-radius: 3px;
   color: white;
-  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, .6);
   /* fallback color */
-  background: rgba(0, 0, 0, 0.7);
   padding: 40px;
-  opacity: 70%;
+  /* opacity: 70%; */
 }
 
 /* ***************************************** FORMS  ***************************************** */
 
 .form-bg {
   height: 100vh;
-  background-color: #f5f0e3;
+  /* background-color: #f5f0e3; */
 }
 
 .form-bg h3 {
-  padding: 6%;
+  padding: 4%;
+ /* transform: translate(0, .4em); */
+}
+body{
+  background-color: #f5f0e3;
 }
 
 /* .form-bg label, .form-bg input{
@@ -275,6 +278,9 @@ BLUE: #40BFC1 */
 
 .info-box {
   padding: 5%;
+}
+.section-2{
+  background-color: white;
 }
 
 .section-3 {

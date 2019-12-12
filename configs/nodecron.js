@@ -50,8 +50,7 @@ const timedSearchMasterFunction = () => {
                   " flats"
                 );
                 //---------- ACTUALLY SEND EMAILS TO LISTINGS -----------------
-                 // return sendEmail(arrOfId, req.user._id)
-                
+                return sendEmail(arrOfId, req.user._id);
               });
             }
           );
@@ -69,4 +68,3 @@ cron.schedule("0 0 */1 * * *", () => {
   console.log("Master function running ", hour, min);
   timedSearchMasterFunction();
 });
-
