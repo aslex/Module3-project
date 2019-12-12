@@ -18,7 +18,9 @@ require("./configs/passport");
 require("./configs/nodecron");
 
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/Module3-project", {
+    useNewUrlParser: true
+  })
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
